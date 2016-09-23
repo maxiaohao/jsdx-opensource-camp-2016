@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<web-app>
+
+    <display-name>assignment-1</display-name>
+
+    <taglib>
+        <taglib-uri>http://java.sun.com/jstl/core</taglib-uri>
+        <taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+    </taglib>
+
+</web-app>
