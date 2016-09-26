@@ -11,6 +11,14 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 war.archiveName = 'assignment-1.war'
 
+eclipse.classpath.file {
+    withXml { xml ->
+        def node = xml.asNode()
+        node.remove( node.find { it.@path == 'org.eclipse.jst.j2ee.internal.web.container' } )
+        node.appendNode( 'classpathentry', [ kind: 'con', path: 'org.eclipse.jst.j2ee.internal.web.container', exported: 'true'])
+    }
+}
+
 allprojects {
 
     tasks.withType(JavaCompile) {
