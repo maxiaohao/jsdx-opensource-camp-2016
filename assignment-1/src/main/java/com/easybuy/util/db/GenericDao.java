@@ -39,8 +39,8 @@ public class GenericDao {
 
 
     /**
-     * Call a single prepared or call-able insert sql statement and return object with auto-generated key. The
-     * connection used during call is retrieved from {@link PooledDataSource}.
+     * Call a single prepared or call-able insert sql statement and return auto-generated ID. The connection used during
+     * call is retrieved from {@link PooledDataSource}.
      *
      * @param clazz
      *            the bean's class
@@ -49,15 +49,29 @@ public class GenericDao {
      *            a prepared or call-able sql statement
      * @param params
      *            variable parameters for the prepared sql statement
-     * @return bean with auto-generated key after insert
+     * @return auto-generated ID in the table
      * @throws SQLException
      */
-    public <T> T insert(Class<T> clazz, String sql, Object... params) throws SQLException {
+    public <T> int insert(Class<T> clazz, String sql, Object... params) throws SQLException {
         Connection conn = PooledDataSource.getConnection();
         try {
-            T ret = runner.insert(conn, sql, new BeanHandler<T>(clazz), params);
+            int newId = runner.insert(conn, sql, new ResultSetHandler<Integer>() {
+
+                /**
+                 * Anonymous handle method that retrieve the auto-generated Id
+                 */
+                @Override
+                public Integer handle(ResultSet rs) throws SQLException {
+                    if (rs.next()) {
+                        int ret = rs.getInt(1);
+                        rs.close();
+                        return ret;
+                    }
+                    return 0;
+                }
+            }, params);
             conn.commit();
-            return ret;
+            return newId;
         } catch (SQLException e) {
             conn.rollback();
             log.error(e.getMessage());

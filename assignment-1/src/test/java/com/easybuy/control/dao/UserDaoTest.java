@@ -22,7 +22,7 @@ public class UserDaoTest {
         user.setEu_birthday(new Date());
         user.setEu_status(User.STATUS_NORMAL);
         User newUser = new UserDaoImplMySql().addUser(user);
-        log.info("newUser-> ", newUser);
+        log.info("newUser Id -> {}", newUser.getEu_user_id());
     }
 
     //
