@@ -30,12 +30,42 @@ public class GenericDao {
     /**
      * log writer for this class
      */
-    private final Logger log = LoggerFactory.getLogger(GenericDao.class);
+    protected final Logger log = LoggerFactory.getLogger(GenericDao.class);
 
     /**
      * the underlying commons-dbutils' query runner that does all the work
      */
     final private QueryRunner runner = new QueryRunner();
+
+
+    /**
+     * Call a single prepared or call-able insert sql statement and return object with auto-generated key. The
+     * connection used during call is retrieved from {@link PooledDataSource}.
+     *
+     * @param clazz
+     *            the bean's class
+     *
+     * @param sql
+     *            a prepared or call-able sql statement
+     * @param params
+     *            variable parameters for the prepared sql statement
+     * @return bean with auto-generated key after insert
+     * @throws SQLException
+     */
+    public <T> T insert(Class<T> clazz, String sql, Object... params) throws SQLException {
+        Connection conn = PooledDataSource.getConnection();
+        try {
+            T ret = runner.insert(conn, sql, new BeanHandler<T>(clazz), params);
+            conn.commit();
+            return ret;
+        } catch (SQLException e) {
+            conn.rollback();
+            log.error(e.getMessage());
+            throw new SQLException(e);
+        } finally {
+            DbUtils.closeQuietly(conn);
+        }
+    }
 
 
     /**

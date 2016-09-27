@@ -4,6 +4,9 @@ import java.util.Date;
 
 public class User {
 
+    public static final int STATUS_NORMAL = 1;
+    public static final int STATUS_ADMIN = 2;
+
     long eu_user_id;
     String eu_user_name;
     String eu_password;

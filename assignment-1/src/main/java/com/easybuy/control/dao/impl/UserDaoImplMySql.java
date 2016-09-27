@@ -1,5 +1,6 @@
 package com.easybuy.control.dao.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.easybuy.control.dao.UserDao;
@@ -9,9 +10,24 @@ import com.easybuy.util.db.GenericDao;
 public class UserDaoImplMySql extends GenericDao implements UserDao {
 
     @Override
-    public boolean addUser(User user) {
-        // TODO Auto-generated method stub
-        return false;
+    public User addUser(User user) {
+        if (null == user) {
+            return null;
+        }
+        try {
+            User newUser = insert(
+                    User.class,
+                    "insert into easybuy_user (eu_user_name, eu_password, eu_sex, eu_birthday, "
+                            + "eu_identity_code, eu_email, eu_mobile, eu_address, eu_status) values (?,?,?,?,?,?,?,?,?)",
+                    user.getEu_user_name(), user.getEu_password(), user.getEu_sex(), user.getEu_birthday(),
+                    user.getEu_identity_code(), user.getEu_email(), user.getEu_mobile(), user.getEu_address(),
+                    user.getEu_status());
+            log.info("created new user {}", user);
+            return newUser;
+        } catch (SQLException e) {
+            log.error("failed to create new user {}", user);
+        }
+        return null;
     }
 
 

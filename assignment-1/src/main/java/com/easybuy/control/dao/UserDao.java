@@ -6,7 +6,7 @@ import com.easybuy.model.User;
 
 public interface UserDao {
 
-    boolean addUser(User user);
+    User addUser(User user);
 
 
     boolean removeUser(long id);
@@ -18,7 +18,7 @@ public interface UserDao {
     User getUserById(long userId);
 
 
-    User getUserByUserName(String userNames);
+    User getUserByUserName(String userName);
 
 
     List<User> getAllUsers();
