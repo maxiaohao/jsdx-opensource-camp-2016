@@ -40,7 +40,7 @@ create table easybuy.easybuy_comment (
     ec_reply varchar(400),
     ec_content text,
     ec_create_time timestamp default current_timestamp,
-    ec_reply_time timestamp default current_timestamp on update current_timestamp,
+    ec_reply_time timestamp,
     ec_nick_name varchar(200),
     primary key (ec_id)
 );
