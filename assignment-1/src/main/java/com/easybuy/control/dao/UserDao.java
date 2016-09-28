@@ -4,23 +4,30 @@ import java.util.List;
 
 import com.easybuy.model.User;
 
+/**
+ * DB CRUD interface for {@link User}.
+ *
+ * @author maxiaohao <maxiaohao@gmail.com>
+ * @date Sep 28, 2016
+ *
+ */
 public interface UserDao {
 
-    User addUser(User user);
+    User addUser(User user) throws Throwable;
 
 
-    boolean removeUser(long id);
+    boolean removeUser(long userId) throws Throwable;
 
 
-    boolean updateUser(long id, User user);
+    boolean updateUser(long userId, User user) throws Throwable;
 
 
-    User getUserById(long userId);
+    User getUserById(long userId) throws Throwable;
 
 
-    User getUserByUserName(String userName);
+    User getUserByUserName(String userName) throws Throwable;
 
 
-    List<User> getAllUsers();
+    List<User> getAllUsers() throws Throwable;
 
 }
