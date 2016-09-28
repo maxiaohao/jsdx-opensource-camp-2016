@@ -2,6 +2,12 @@ package com.easybuy.model;
 
 import java.util.Date;
 
+/**
+ *
+ * @author maxiaohao <maxiaohao@gmail.com>
+ * @date Sep 28, 2016
+ *
+ */
 public class User {
 
     public static final int STATUS_NORMAL = 1;

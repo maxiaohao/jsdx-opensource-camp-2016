@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The generic DAO (Data Access Object) that can facilitate model DAOs.
  *
- * @author xma11 <maxiaohao@gmail.com>
+ * @author maxiaohao <maxiaohao@gmail.com>
  * @date Sep 23, 2016
  *
  */
