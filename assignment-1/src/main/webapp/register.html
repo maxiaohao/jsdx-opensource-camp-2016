@@ -5,6 +5,9 @@
 <title>易买网 - 首页</title>
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 <script type="text/javascript" src="scripts/function.js"></script>
+<script type="text/javascript" src="scripts/third-party/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/third-party/json2.js"></script>
+<script type="text/javascript" src="scripts/register.js"></script>
 </head>
 <body>
 <div id="header" class="wrap">
@@ -56,7 +59,7 @@
 				<table>
 					<tr>
 						<td class="field">用户名：</td>
-						<td><input class="text" type="text" name="userName" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><span></span></td>
+						<td><input class="text" type="text" id="userName" name="userName" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><span></span></td>
 					</tr>
 					<tr>
 						<td class="field">登录密码：</td>
@@ -64,15 +67,17 @@
 					</tr>
 					<tr>
 						<td class="field">确认密码：</td>
-						<td><input class="text" type="password" name="rePassWord" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><span></span></td>
+						<td><input class="text" type="password" id="rePassWord" name="rePassWord" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><span></span></td>
 					</tr>
 					<tr>
 						<td class="field">验证码：</td>
-						<td><input class="text verycode" type="text" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this);" /><img id="veryCode" src="" /><span></span></td>
+						<td><input class="text verycode" type="text" id="answer" name="veryCode" onfocus="FocusItem(this)" onblur="CheckItem(this);" />
+                        <img id="veryCode" src="generate-captcha" />
+                        <input type="button" id="refreshCaptchaBtn" value="换一张" /></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><label class="ui-green"><input type="submit" name="submit" value="提交注册" /></label></td>
+						<td><label class="ui-green"><input type="button" id="submitBtn" name="submit" value="提交注册" /></label></td>
 					</tr>
 				</table>
 			</form>

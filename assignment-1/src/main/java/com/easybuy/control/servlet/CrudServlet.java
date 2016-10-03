@@ -1,6 +1,7 @@
 package com.easybuy.control.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,44 +30,82 @@ public class CrudServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String model = request.getParameter("model");
         String action = request.getParameter("action");
+
+        PrintWriter writer = response.getWriter();
+
         if (null == model || null == action) {
-            JsonUtils.writeAsJson(response.getWriter(), new CrudResult(false, "无效的model或action参数"));
+            JsonUtils.writeAsJson(writer, new CrudResult(false, "无效的model或action参数"));
         }
 
         response.setContentType("text/json");
 
         switch (model) {
+
         case "user":
+            String userName = null;
+            String passWord = null;
+            String answer = null;
+            String captcherAnswer = null;
+
             UserBiz biz = new UserBizImpl();
-            switch (action.toLowerCase()) {
+
+            switch (action) {
             case "login":
-                String userName = request.getParameter("userName");
-                String passWord = request.getParameter("passWord");
-                String veryCode = request.getParameter("veryCode");
-                String captcherAnswer = (String) request.getSession().getAttribute(
+                userName = request.getParameter("userName");
+                passWord = request.getParameter("passWord");
+                answer = request.getParameter("answer");
+                captcherAnswer = (String) request.getSession().getAttribute(
                         Constants.SESS_ATTR_NAME_CAPTCHA_ANSWER);
-                if (!captcherAnswer.equalsIgnoreCase(veryCode)) {
-                    JsonUtils.writeAsJson(response.getWriter(), new CrudResult(false, "验证码不正确"));
+                if (!captcherAnswer.equalsIgnoreCase(answer)) {
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "验证码不正确"));
                 } else if (userName == null || passWord == null || userName.length() == 0 || passWord.length() == 0) {
-                    JsonUtils.writeAsJson(response.getWriter(), new CrudResult(false, "用户名/密码不能为空"));
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "用户名/密码不能为空"));
                 } else {
                     User user = (User) biz.getUserByUserName(userName).getData();
                     if (null == user || !passWord.equals(user.getEu_password())) {
-                        JsonUtils.writeAsJson(response.getWriter(), new CrudResult(false, "用户名或密码错误"));
+                        JsonUtils.writeAsJson(writer, new CrudResult(false, "用户名或密码错误"));
                     } else {
                         // put username into session
                         request.getSession().setAttribute(Constants.SESS_ATTR_NAME_USERNAME, userName);
-                        JsonUtils.writeAsJson(response.getWriter(), new CrudResult(true));
+                        JsonUtils.writeAsJson(writer, new CrudResult(true));
                     }
                 }
                 break;
             case "logout":
                 request.getSession().setAttribute(Constants.SESS_ATTR_NAME_USERNAME, null);
-                JsonUtils.writeAsJson(response.getWriter(), new CrudResult(true));
+                JsonUtils.writeAsJson(writer, new CrudResult(true));
                 break;
             case "get_current_user_name":
-                JsonUtils.writeAsJson(response.getWriter(), biz.getCurrentUserName(request));
+                JsonUtils.writeAsJson(writer, biz.getCurrentUserName(request));
                 break;
+            case "add":
+                userName = request.getParameter("userName");
+                passWord = request.getParameter("passWord");
+                String rePassWord = request.getParameter("rePassWord");
+                answer = request.getParameter("answer");
+                captcherAnswer = (String) request.getSession().getAttribute(
+                        Constants.SESS_ATTR_NAME_CAPTCHA_ANSWER);
+                if (!captcherAnswer.equalsIgnoreCase(answer)) {
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "验证码不正确"));
+                } else if (userName == null || userName.length() == 0) {
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "用户名不能为空"));
+                } else if (passWord == null || passWord.length() == 0 || rePassWord == null || rePassWord.length() == 0) {
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "密码不能为空"));
+                } else if (!passWord.equals(rePassWord)) {
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "两次输入的密码不一致"));
+                } else {
+                    User newUser = new User();
+                    newUser.setEu_user_name(userName);
+                    newUser.setEu_password(passWord);
+                    CrudResult ret = biz.addUser(newUser);
+                    if (ret.isSuccess()) {
+                        // set as logged in
+                        request.getSession().setAttribute(Constants.SESS_ATTR_NAME_USERNAME, userName);
+                    }
+                    JsonUtils.writeAsJson(writer, ret);
+                }
+                break;
+            default:
             }
             break;
         }

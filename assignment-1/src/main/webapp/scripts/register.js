@@ -11,15 +11,16 @@ $(function() {
             url : 'crud-servlet',
             data : {
                 model : 'user',
-                action : 'login',
+                action : 'add',
                 userName : $("#userName").val(),
                 passWord : $("#passWord").val(),
+                rePassWord: $("#rePassWord").val(),
                 answer : $("#answer").val()
             },
             success : function(ret) {
                 if (ret.success) {
-                    // redirect to index page
-                    window.location.href = "index.html";
+                    // redirect to reg-result page
+                    window.location.href = "reg-result.html";
                 } else {
                     alert(ret.msg);
                 }

@@ -20,11 +20,11 @@ public class UserBizImpl implements UserBiz {
             return new CrudResult(false, "invalid user null!");
         }
         if (null == user.getEu_user_name() || user.getEu_user_name().trim().length() == 0) {
-            return new CrudResult(false, "user name shoudl not be empty!");
+            return new CrudResult(false, "用户名不能为空");
         }
         try {
             if (null != dao.getUserByUserName(user.getEu_user_name())) {
-                return new CrudResult(false, "user name '" + user.getEu_user_name() + "' is already taken!");
+                return new CrudResult(false, "用户名'" + user.getEu_user_name() + "'已经被他人使用， 请尝试其他用户名!");
             }
 
             User newUser = dao.addUser(user);
