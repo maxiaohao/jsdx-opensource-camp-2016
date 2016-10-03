@@ -25,21 +25,12 @@
         <servlet-class>com.easybuy.control.servlet.CrudServlet</servlet-class>
     </servlet>
     <servlet>
-        <display-name>LoginServlet</display-name>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.easybuy.control.servlet.LoginServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CaptchaServlet</servlet-name>
         <servlet-class>com.easybuy.control.servlet.CaptchaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CrudServlet</servlet-name>
         <url-pattern>/crud-servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/login-servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CaptchaServlet</servlet-name>

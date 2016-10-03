@@ -8,8 +8,10 @@ $(function() {
 
     $("#submitBtn").click(function() {
         $.ajax({
-            url : 'login-servlet',
+            url : 'crud-servlet',
             data : {
+                model : 'user',
+                action : 'login',
                 userName : $("#userName").val(),
                 passWord : $("#passWord").val(),
                 veryCode : $("#veryCode").val()
@@ -19,7 +21,7 @@ $(function() {
                     // redirect to index.html
                     window.location.href = "index.html";
                 } else {
-                    alert(">> "+ret.msg);
+                    alert(ret.msg);
                 }
             },
             error : function() {

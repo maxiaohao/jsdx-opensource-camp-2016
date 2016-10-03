@@ -121,9 +121,10 @@ public class UserBizImpl implements UserBiz {
 
     @Override
     public CrudResult getCurrentUserName(HttpServletRequest req) {
-        if (null != req) {
-            String curUserName = (String) req.getSession().getAttribute(Constants.SESS_ATTR_NAME_USERNAME);
-            return new CrudResult(true, curUserName);
+        String curUserName = null;
+        if (null != req
+                && null != (curUserName = (String) req.getSession().getAttribute(Constants.SESS_ATTR_NAME_USERNAME))) {
+            return new CrudResult(true, (Object) curUserName);
         } else {
             return new CrudResult(false);
         }
