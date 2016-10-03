@@ -1,7 +1,7 @@
-package com.easybuy.util.db;
+package com.easybuy.util;
 
 /**
- * Wrap of a result for CRUD (Create, Read, Update, Delete) operations.
+ * Wrap of a result for generic CRUD (Create, Read, Update, Delete) operations.
  *
  * @author maxiaohao <maxiaohao@gmail.com>
  * @date Sep 28, 2016
