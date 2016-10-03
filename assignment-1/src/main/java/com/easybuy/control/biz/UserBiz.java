@@ -1,7 +1,9 @@
 package com.easybuy.control.biz;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.easybuy.model.User;
-import com.easybuy.util.db.CrudResult;
+import com.easybuy.util.CrudResult;
 
 /**
  *
@@ -27,4 +29,7 @@ public interface UserBiz {
 
 
     CrudResult getAllUsers();
+
+
+    CrudResult getCurrentUserName(HttpServletRequest req);
 }

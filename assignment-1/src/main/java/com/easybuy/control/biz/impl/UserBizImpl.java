@@ -1,10 +1,13 @@
 package com.easybuy.control.biz.impl;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.easybuy.control.Constants;
 import com.easybuy.control.biz.UserBiz;
 import com.easybuy.control.dao.UserDao;
 import com.easybuy.control.dao.impl.UserDaoImplMySql;
 import com.easybuy.model.User;
-import com.easybuy.util.db.CrudResult;
+import com.easybuy.util.CrudResult;
 
 public class UserBizImpl implements UserBiz {
 
@@ -112,6 +115,17 @@ public class UserBizImpl implements UserBiz {
         } catch (Throwable e) {
             return new CrudResult(false, "Exception occurred while reading users from database. Error msg: "
                     + e.getLocalizedMessage());
+        }
+    }
+
+
+    @Override
+    public CrudResult getCurrentUserName(HttpServletRequest req) {
+        if (null != req) {
+            String curUserName = (String) req.getSession().getAttribute(Constants.SESS_ATTR_NAME_USERNAME);
+            return new CrudResult(true, curUserName);
+        } else {
+            return new CrudResult(false);
         }
     }
 
