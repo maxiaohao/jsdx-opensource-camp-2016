@@ -1,3 +1,7 @@
+<%@ page language="java" pageEncoding="utf-8"%>
+<%@ page import="com.easybuy.control.Constants" %>
+<%@ page import="com.easybuy.control.biz.impl.UserBizImpl" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,8 +16,8 @@
 	<div class="help"><a href="../index.html">返回前台页面</a></div>
 	<div class="navbar">
 		<ul class="clearfix">
-			<li class="current"><a href="index.html">首页</a></li>
-			<li><a href="user.html">用户</a></li>
+			<li><a href="index.html">首页</a></li>
+			<li class="current"><a href="user.jsp">用户</a></li>
 			<li><a href="product.html">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
@@ -34,7 +38,7 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.html">新增</a></em><a href="user.html">用户管理</a></dd>
+				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
 				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
 				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
@@ -48,21 +52,35 @@
 		</div>
 	</div>
 	<div class="main">
-		<h2>提示信息</h2>
+		<h2>用户管理</h2>
 		<div class="manage">
-			<div class="shadow">
-				<em class="corner lb"></em>
-				<em class="corner rt"></em>
-				<div class="box">
-					<div class="msg">
-						<p>恭喜：操作成功！</p>
-						<p>正在进入首页...</p>
-						<script type="text/javascript">
-							setTimeout("location.href='index.html'", 1000);
-						</script>
-					</div>
-				</div>
-			</div>
+			<table class="list">
+				<tr>
+					<th>ID</th>
+					<th>用户名</th>
+					<th>性别</th>
+					<th>Email</th>
+					<th>手机</th>
+					<th>操作</th>
+				</tr>
+                
+                <%
+                    request.setAttribute("users", new UserBizImpl().getAllUsers().getData());
+                %>
+                
+                <c:forEach items="${users}" var="user" begin="0" end="2">
+                <tr>
+                    <td class="first w4 c">${user.eu_user_id}</td>
+                    <td class="w1 c">${user.eu_user_name}</td>
+                    <td class="w2 c">${user.eu_sex}</td>
+                    <td>${user.eu_email}</td>
+                    <td class="w4 c">${user.eu_mobile}</td>
+                    <td class="w1 c"><a href="user-modify.jsp?userId=${user.eu_user_id}">修改</a> 
+                    <a href="admin-crud-servlet?model=user&action=delete&userId=${user.eu_user_id}">删除</a></td>
+                </tr>
+                </c:forEach>
+                
+			</table>
 		</div>
 	</div>
 	<div class="clear"></div>

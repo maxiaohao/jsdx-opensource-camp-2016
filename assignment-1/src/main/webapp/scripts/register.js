@@ -8,10 +8,10 @@ $(function() {
 
     $("#submitBtn").click(function() {
         $.ajax({
-            url : 'crud-servlet',
+            url : 'public-json-crud-servlet',
             data : {
                 model : 'user',
-                action : 'add',
+                action : 'register',
                 userName : $("#userName").val(),
                 passWord : $("#passWord").val(),
                 rePassWord: $("#rePassWord").val(),

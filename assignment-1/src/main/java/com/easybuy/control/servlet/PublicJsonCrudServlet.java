@@ -16,12 +16,13 @@ import com.easybuy.util.CrudResult;
 import com.easybuy.util.JsonUtils;
 
 /**
+ * This servlet serves all the public (non-admin) CRUD requests and always print a json string of {@link CrudResult}.
  *
  * @author xma11 <maxiaohao@gmail.com>
  * @date Oct 2, 2016
  *
  */
-public class CrudServlet extends HttpServlet {
+public class PublicJsonCrudServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -67,6 +68,10 @@ public class CrudServlet extends HttpServlet {
                     } else {
                         // put username into session
                         request.getSession().setAttribute(Constants.SESS_ATTR_NAME_USERNAME, userName);
+                        if (User.STATUS_ADMIN == user.getEu_status()) {
+                            // if user is admin, put attr to session also
+                            request.getSession().setAttribute(Constants.SESS_ATTR_NAME_IS_ADMIN, true);
+                        }
                         JsonUtils.writeAsJson(writer, new CrudResult(true));
                     }
                 }
@@ -78,7 +83,7 @@ public class CrudServlet extends HttpServlet {
             case "get_current_user_name":
                 JsonUtils.writeAsJson(writer, biz.getCurrentUserName(request));
                 break;
-            case "add":
+            case "register":
                 userName = request.getParameter("userName");
                 passWord = request.getParameter("passWord");
                 String rePassWord = request.getParameter("rePassWord");
@@ -108,6 +113,7 @@ public class CrudServlet extends HttpServlet {
             default:
             }
             break;
+        default:
         }
     }
 

@@ -1,3 +1,6 @@
+<%@ page language="java" pageEncoding="utf-8"%>
+<%@ page import="com.easybuy.control.Constants" %>
+<%@ page import="com.easybuy.util.CrudResult" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,8 +15,8 @@
 	<div class="help"><a href="../index.html">返回前台页面</a></div>
 	<div class="navbar">
 		<ul class="clearfix">
-			<li><a href="index.html">首页</a></li>
-			<li class="current"><a href="user.html">用户</a></li>
+			<li class="current"><a href="index.html">首页</a></li>
+			<li><a href="user.jsp">用户</a></li>
 			<li><a href="product.html">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
@@ -34,7 +37,7 @@
 		<div class="box">
 			<dl>
 				<dt>用户管理</dt>
-				<dd><em><a href="user-add.html">新增</a></em><a href="user.html">用户管理</a></dd>
+				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
 				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
 				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
@@ -48,61 +51,39 @@
 		</div>
 	</div>
 	<div class="main">
-		<h2>新增用户</h2>
+		<h2>提示信息</h2>
 		<div class="manage">
-			<form action="manage-result.html">
-				<table class="form">
-					<tr>
-						<td class="field">用户名：</td>
-						<td><input type="text" class="text" name="userName" value="" /></td>
-					</tr>
-					<tr>
-						<td class="field">姓名：</td>
-						<td><input type="text" class="text" name="name" value="" /></td>
-					</tr>
-					<tr>
-						<td class="field">密码：</td>
-						<td><input type="text" class="text" name="passWord" value="" /></td>
-					</tr>
-					<tr>
-						<td class="field">性别：</td>
-						<td><input type="radio" name="sex" value="1" checked="checked" />男 <input type="radio" name="sex" value="1" />女</td>
-					</tr>
-					<tr>
-						<td class="field">出生日期：</td>
-						<td>
-							<select name="birthyear">
-								<option value="2000">2000</option>
-								<option value="1999">1999</option>
-							</select>年
-							<select name="birthmonth">
-								<option value="12">12</option>
-								<option value="11">11</option>
-							</select>月
-							<select name="birthday">
-								<option value="2">2</option>
-								<option value="1">1</option>
-							</select>日
-						</td>
-					</tr>
-					<tr>
-						<td class="field">手机号码：</td>
-						<td><input type="text" class="text" name="mobile" value="" /></td>
-					</tr>
-					<tr>
-						<td class="field">送货地址：</td>
-						<td><input type="text" class="text" name="address" value="" /></td>
-					</tr>
-					<tr>
-						<td class="field">头像：</td>
-						<td><input type="file" class="text" name="photo" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><label class="ui-blue"><input type="submit" name="submit" value="添加" /></label></td>
-					</tr>
-				</table>
-			</form>
+			<div class="shadow">
+				<em class="corner lb"></em>
+				<em class="corner rt"></em>
+				<div class="box">
+					<div class="msg">
+                    <%
+                        CrudResult result=(CrudResult)request.getAttribute(Constants.REQ_ATTR_NAME_CURR_ADMIN_CRUD_RESULT);
+                        if(null==result){
+                    %>
+                        <p>发生内部错误，AdminCrudServlet未正确返回结果</p>
+                    <%
+                        } else if (result.isSuccess()){
+                            String returnPage=(String)request.getAttribute(Constants.REQ_ATTR_NAME_CURR_ADMIN_PAGE);
+                    %>
+						<p style="color:green">恭喜：操作成功！</p>
+						<p>正在跳转...</p>
+						<script type="text/javascript">
+							setTimeout("location.href='<%=returnPage %>'", 1500);
+						</script>
+                    <%
+                        } else {
+                    %>
+                        <p style="color:red">操作失败!</p>
+                        <p>错误信息：<%=result.getMsg() %></p>
+                        <a href="javascript:history.go(-1);">返回上一页</a>
+                    <%
+                        }
+                    %>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="clear"></div>

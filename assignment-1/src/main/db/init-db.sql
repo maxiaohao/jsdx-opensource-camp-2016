@@ -85,5 +85,7 @@ create table easybuy.easybuy_order_detail (
     primary key (eod_id)
 );
 
+insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('admin','admin','foo@bar.baz','18900000000',2);
+
 commit;
 

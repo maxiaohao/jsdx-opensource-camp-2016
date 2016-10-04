@@ -10,7 +10,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Servlet Filter implementation class SetCharacterSetFilter
+ * A filter that set encoding for all request/response.
+ *
+ * @author xma11 <maxiaohao@gmail.com>
+ * @date Oct 4, 2016
+ *
  */
 public class SetCharacterSetFilter implements Filter {
 

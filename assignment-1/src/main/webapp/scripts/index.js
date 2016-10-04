@@ -3,7 +3,7 @@
 $(function() {
 
     $.ajax({
-        url : 'crud-servlet',
+        url : 'public-json-crud-servlet',
         data : {
             model : 'user',
             action : 'get_current_user_name'
@@ -25,7 +25,7 @@ $(function() {
 
     $("#logoutLink").click(function() {
         $.ajax({
-            url : 'crud-servlet',
+            url : 'public-json-crud-servlet',
             data : {
                 model : 'user',
                 action : 'logout'

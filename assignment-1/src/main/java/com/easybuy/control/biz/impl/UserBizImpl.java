@@ -60,13 +60,27 @@ public class UserBizImpl implements UserBiz {
         if (null == user) {
             return new CrudResult(false, "invalid user null!");
         }
-        // TODO: some extra checks before update the user
+        String newUserName = user.getEu_user_name();
+        if (null == newUserName) {
+            return new CrudResult(false, "用户名不能为空");
+        } else {
+            User otherUser = null;
+            try {
+                otherUser = dao.getUserByUserName(newUserName);
+            } catch (Throwable e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if (null != otherUser && userId != otherUser.getEu_user_id()) {
+                return new CrudResult(false, "修改后的用户名'" + newUserName + "'已经被其他用户所用！");
+            }
+        }
         try {
             boolean ret = dao.updateUser(userId, user);
             if (ret) {
                 return new CrudResult(true);
             } else {
-                return new CrudResult(false, "no user with id=" + userId + " were removed from database");
+                return new CrudResult(false, "no user with id=" + userId + " were updated");
             }
         } catch (Throwable e) {
             return new CrudResult(false, "Exception occurred while updating user from database. user_id= " + userId

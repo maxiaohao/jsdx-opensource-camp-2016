@@ -2,6 +2,6 @@
 function Delete(id)
 {
 	if(confirm("确定要删除吗？")) {
-		location.href = "user-delete.html?id=" + id;
+		location.href = "manager-crud-servlet?model=user&action=delete&userId=" + id;
 	}
 }
