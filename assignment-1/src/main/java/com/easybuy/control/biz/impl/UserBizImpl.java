@@ -144,4 +144,21 @@ public class UserBizImpl implements UserBiz {
         }
     }
 
+
+    @Override
+    public CrudResult isCurrentUserAdmin(HttpServletRequest req) {
+        String curUserName = null;
+        if (null != req
+                && null != (curUserName = (String) req.getSession().getAttribute(Constants.SESS_ATTR_NAME_USERNAME))) {
+            try {
+                User user = dao.getUserByUserName(curUserName);
+                return new CrudResult(true, null != user && user.getEu_status() == User.STATUS_ADMIN);
+            } catch (Throwable e) {
+                return new CrudResult(false, e.getLocalizedMessage());
+            }
+        } else {
+            return new CrudResult(false);
+        }
+    }
+
 }

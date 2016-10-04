@@ -83,6 +83,9 @@ public class PublicJsonCrudServlet extends HttpServlet {
             case "get_current_user_name":
                 JsonUtils.writeAsJson(writer, biz.getCurrentUserName(request));
                 break;
+            case "is_current_user_admin":
+                JsonUtils.writeAsJson(writer, biz.isCurrentUserAdmin(request));
+                break;
             case "register":
                 userName = request.getParameter("userName");
                 passWord = request.getParameter("passWord");

@@ -32,4 +32,6 @@ public interface UserBiz {
 
 
     CrudResult getCurrentUserName(HttpServletRequest req);
+
+    CrudResult isCurrentUserAdmin(HttpServletRequest req);
 }

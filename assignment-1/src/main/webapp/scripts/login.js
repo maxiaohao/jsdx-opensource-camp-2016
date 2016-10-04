@@ -9,6 +9,7 @@ $(function() {
     $("#submitBtn").click(function() {
         $.ajax({
             url : 'public-json-crud-servlet',
+            method: 'post',
             data : {
                 model : 'user',
                 action : 'login',

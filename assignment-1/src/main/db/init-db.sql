@@ -23,7 +23,7 @@ create table easybuy.easybuy_user (
     eu_email varchar(400),
     eu_mobile varchar(100),
     eu_address varchar(400),
-    eu_status decimal(1),
+    eu_status decimal(1) default 1,
     primary key (eu_user_id)
 );
 
@@ -86,6 +86,8 @@ create table easybuy.easybuy_order_detail (
 );
 
 insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('admin','admin','foo@bar.baz','18900000000',2);
+insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('user1','user1','user1@bar.baz','18900000011',1);
+insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('user2','user2','user2@bar.baz','18900000022',1);
 
 commit;
 

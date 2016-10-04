@@ -68,7 +68,7 @@
                     request.setAttribute("users", new UserBizImpl().getAllUsers().getData());
                 %>
                 
-                <c:forEach items="${users}" var="user" begin="0" end="2">
+                <c:forEach items="${users}" var="user" begin="0" >
                 <tr>
                     <td class="first w4 c">${user.eu_user_id}</td>
                     <td class="w1 c">${user.eu_user_name}</td>
