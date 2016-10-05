@@ -10,6 +10,7 @@
 <script type="text/javascript" src="scripts/third-party/json2.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
 <script type="text/javascript">
+function load(){
     renderTopRightInfo();
     renderProdCats();
     var epId=window.location.href.split('=')[1];
@@ -17,9 +18,10 @@
         epId=1;
     }
     renderProductDetail(epId);
+}
 </script>
 </head>
-<body>
+<body onload="load()">
 <div id="header" class="wrap">
 	<div id="logo"><img src="images/logo.gif" /></div>
     <div class="help">

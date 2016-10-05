@@ -67,3 +67,8 @@ jar {
     exclude('log4j.properties')
 }
 
+jettyRun.daemon = false
+jettyRun.httpPort = 4488
+[jettyRun,jettyStop]*.stopPort = 4489
+[jettyRun,jettyStop]*.stopKey = 'foo'
+
