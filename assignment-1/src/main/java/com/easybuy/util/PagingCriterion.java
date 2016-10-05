@@ -1,8 +1,8 @@
 package com.easybuy.util;
 
 /**
- * A paging criterion utilizes the paging calculation work, providing start/end row number on a specified page as well
- * as moveToNextPage()/moveToPreviousPage().
+ * A paging criterion utilizes the paging calculation work, providing start/end/total row number on a specified page as
+ * well as moveToNextPage()/moveToPreviousPage().
  *
  * @author maxiaohao <maxiaohao@gmail.com>
  * @date Sep 30, 2016
@@ -15,7 +15,7 @@ public class PagingCriterion {
     int pageSize = DEFAULT_PAGE_SIZE;
 
     /*
-     * 1-based
+     * page numbers are 1-based
      */
     int currentPage = 1;
     int totalPageCount = 0;
@@ -30,14 +30,15 @@ public class PagingCriterion {
 
 
     public PagingCriterion(long totalRowCount, int currentPage) throws Exception {
-        this(totalRowCount);
+        this.totalRowCount = totalRowCount;
         this.currentPage = currentPage;
         calculateNumbers();
     }
 
 
     public PagingCriterion(long totalRowCount, int currentPage, int pageSize) throws Exception {
-        this(totalRowCount, currentPage);
+        this.totalRowCount = totalRowCount;
+        this.currentPage = currentPage;
         this.pageSize = pageSize;
         calculateNumbers();
     }
@@ -53,12 +54,12 @@ public class PagingCriterion {
         long totalPageCount = totalRowCount / pageSize + (0 == totalRowCount % pageSize ? 0 : 1);
         if (0 == totalPageCount) {
             // no data at all
-            currentPage = 0;
+            currentPage = 1;
         } else if (currentPage < 1 || currentPage > totalPageCount) {
             throw new Exception("currentPage should be between 1 and " + totalPageCount + ", while totalRowCount=="
                     + totalRowCount + ", pageSize==" + pageSize + ")");
         }
-
+        this.totalPageCount = (int) totalPageCount;
     }
 
 
@@ -134,11 +135,21 @@ public class PagingCriterion {
     }
 
 
+    /**
+     * Get the current start row number (0-based) in total rows, where current means in current page.
+     *
+     * @return
+     */
     public long getCurrentPageRowStart() {
         return (currentPage - 1) * pageSize;
     }
 
 
+    /**
+     * Get the current end row number (0-based) in total rows, where current means in current page.
+     *
+     * @return
+     */
     public long getCurrentPageRowEnd() {
         return Math.min(currentPage * pageSize - 1, totalRowCount - 1);
     }
