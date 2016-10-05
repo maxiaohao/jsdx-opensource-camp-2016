@@ -1,3 +1,7 @@
+<%@ page language="java" pageEncoding="utf-8"%>
+<%@ page import="com.easybuy.control.Constants" %>
+<%@ page import="com.easybuy.control.biz.impl.ProdCatBizImpl" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,7 +18,7 @@
 		<ul class="clearfix">
 			<li><a href="index.html">首页</a></li>
 			<li><a href="user.jsp">用户</a></li>
-			<li class="current"><a href="product.html">商品</a></li>
+			<li class="current"><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
 			<li><a href="news.html">新闻</a></li>
@@ -36,8 +40,8 @@
 				<dt>用户管理</dt>
 				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
@@ -48,53 +52,29 @@
 		</div>
 	</div>
 	<div class="main">
-		<h2>修改商品</h2>
+		<h2>分类管理</h2>
 		<div class="manage">
-			<form action="manage-result.html">
-				<table class="form">
-					<tr>
-						<td class="field">商品名称：</td>
-						<td><input type="text" class="text" name="productName" value="铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机" /></td>
-					</tr>
-					<tr>
-						<td class="field">所属分类：</td>
-						<td>
-							<select name="parentId">
-								<option value="1">电器</option>
-								<option value="3">├ 电器</option>
-								<option value="3">└ 电器</option>
-								<option value="2">衣服</option>
-								<option value="3">├ 电器</option>
-								<option value="3">└ 电器</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="field">商品图片：</td>
-						<td><input type="file" class="text" name="photo" /></td>
-					</tr>
-					<tr>
-						<td class="field">商品价格：</td>
-						<td><input type="text" class="text tiny" name="productPrice" /> 元</td>
-					</tr>
-					<tr>
-						<td class="field">品牌：</td>
-						<td><input type="text" class="text" name="productName" /></td>
-					</tr>
-					<tr>
-						<td class="field">库存：</td>
-						<td><input type="text" class="text tiny" name="productName" /></td>
-					</tr>
-					<tr>
-						<td class="field">条码号：</td>
-						<td><input type="text" class="text" name="productName" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><label class="ui-blue"><input type="submit" name="submit" value="添加" /></label></td>
-					</tr>
-				</table>
-			</form>
+			<table class="list">
+				<tr>
+					<th>ID</th>
+					<th>分类名称</th>
+					<th>操作</th>
+				</tr>
+                
+                <%
+                    request.setAttribute("prodCats", new ProdCatBizImpl().getAllProdCats().getData());
+                %>
+                
+                <c:forEach items="${prodCats}" var="cat" begin="0" >
+                <tr>
+                    <td class="first w4 c">${cat.epc_id}</td>
+                    <td>${cat.epc_name}</td>
+                    <td class="w1 c"><a href="productClass-modify.jsp?epcId=${cat.epc_id}">修改</a> 
+                    <a href="admin-crud-servlet?model=prodCat&action=delete&epcId=${cat.epc_id}">删除</a></td>
+                </tr>
+                </c:forEach>
+                
+			</table>
 		</div>
 	</div>
 	<div class="clear"></div>

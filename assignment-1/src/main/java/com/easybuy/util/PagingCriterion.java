@@ -8,7 +8,7 @@ package com.easybuy.util;
  * @date Sep 30, 2016
  *
  */
-public abstract class AbstractPagingCriterion {
+public class PagingCriterion {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
 
@@ -22,21 +22,21 @@ public abstract class AbstractPagingCriterion {
     long totalRowCount = 0;
 
 
-    public AbstractPagingCriterion(long totalRowCount) throws Exception {
+    public PagingCriterion(long totalRowCount) throws Exception {
         super();
         this.totalRowCount = totalRowCount;
         calculateNumbers();
     }
 
 
-    public AbstractPagingCriterion(long totalRowCount, int currentPage) throws Exception {
+    public PagingCriterion(long totalRowCount, int currentPage) throws Exception {
         this(totalRowCount);
         this.currentPage = currentPage;
         calculateNumbers();
     }
 
 
-    public AbstractPagingCriterion(long totalRowCount, int currentPage, int pageSize) throws Exception {
+    public PagingCriterion(long totalRowCount, int currentPage, int pageSize) throws Exception {
         this(totalRowCount, currentPage);
         this.pageSize = pageSize;
         calculateNumbers();

@@ -1,4 +1,8 @@
 -- connect as 'root'
+
+drop database if exists easybuy;
+drop user 'easybuy'@'%';
+
 create database easybuy default character set utf8 collate utf8_general_ci;
 create user 'easybuy'@'%' identified by 'easybuy';
 grant all privileges on easybuy.* to 'easybuy'@'%';
@@ -88,6 +92,22 @@ create table easybuy.easybuy_order_detail (
 insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('admin','admin','foo@bar.baz','18900000000',2);
 insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('user1','user1','user1@bar.baz','18900000011',1);
 insert into easybuy.easybuy_user (eu_user_name, eu_password, eu_email, eu_mobile, eu_status) values ('user2','user2','user2@bar.baz','18900000022',1);
+
+insert into easybuy.easybuy_product_category (epc_name) values ('测试分类1');
+insert into easybuy.easybuy_product_category (epc_name) values ('测试分类2');
+insert into easybuy.easybuy_product_category (epc_name) values ('测试分类3');
+insert into easybuy.easybuy_product_category (epc_name) values ('测试分类4');
+
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品1',108,300,1,'1.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品2',69.9,500,1,'2.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品3',279,100,1,'3.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品4',4199,1000,1,'4.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品5',49,1000,1,'5.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品6',69.9,1000,1,'6.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品7',268,1000,1,'7.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品8',198,1000,1,'8.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品9',289,1000,1,'9.jpg');
+insert into easybuy.easybuy_product (ep_name,ep_price,ep_stock,epc_id,ep_file_name) values ('测试商品10',186,1000,1,'10.jpg');
 
 commit;
 

@@ -1,3 +1,9 @@
+<%@ page language="java" pageEncoding="utf-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.easybuy.control.Constants" %>
+<%@ page import="com.easybuy.model.ProdCat" %>
+<%@ page import="com.easybuy.control.biz.impl.ProdCatBizImpl" %>
+<%@ page import="org.apache.commons.lang3.math.NumberUtils" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,7 +20,7 @@
 		<ul class="clearfix">
 			<li><a href="index.html">首页</a></li>
 			<li><a href="user.jsp">用户</a></li>
-			<li class="current"><a href="product.html">商品</a></li>
+			<li class="current"><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
 			<li><a href="news.html">新闻</a></li>
@@ -36,8 +42,8 @@
 				<dt>用户管理</dt>
 				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
@@ -48,23 +54,43 @@
 		</div>
 	</div>
 	<div class="main">
-		<h2>添加分类</h2>
+		<h2>修改分类</h2>
 		<div class="manage">
-			<form action="manage-result.html">
+        
+            <%
+                long epcId=NumberUtils.toLong(request.getParameter("epcId"));
+                ProdCat obj=(ProdCat)new ProdCatBizImpl().getProdCatById(epcId).getData();
+                if(null==obj){
+                    obj=new ProdCat();
+                }
+                request.setAttribute("obj", obj);
+                
+                List<ProdCat> cats=(List<ProdCat>)new ProdCatBizImpl().getAllProdCats().getData();
+            %>
+        
+			<form action="admin-crud-servlet" method="post">
+                <input type="hidden" name="model" value="prodCat" />
+                <input type="hidden" name="action" value="update" />
+                <input type="hidden" name="epcId" value="<%=epcId %>" />
 				<table class="form">
 					<tr>
 						<td class="field">父分类：</td>
 						<td>
 							<select name="parentId">
-								<option value="0" selected="selected">根栏目</option>
-								<option value="1">电器</option>
-								<option value="2">衣服</option>
+                                <option value="0" <%=0==obj.getEpc_parent_id()?"selected=\"selected\"":"" %> >[根栏目]</option>
+                                <%
+                                    for(ProdCat cat: cats){
+                                        out.println("<option value=\""+cat.getEpc_id()+"\" "+
+                                    (obj.getEpc_parent_id()==cat.getEpc_id()?"selected=\"selected\"":"")+" >"+cat.getEpc_name()+"</option>");
+                                    }
+                                %>
+
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="field">分类名称：</td>
-						<td><input type="text" class="text" name="className" value="电脑" /></td>
+						<td><input type="text" class="text" name="className" value="${obj.epc_name}" /></td>
 					</tr>
 					<tr>
 						<td></td>

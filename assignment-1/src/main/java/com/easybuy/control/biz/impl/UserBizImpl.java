@@ -9,6 +9,12 @@ import com.easybuy.control.dao.impl.UserDaoImplMySql;
 import com.easybuy.model.User;
 import com.easybuy.util.CrudResult;
 
+/**
+ *
+ * @author xma11 <maxiaohao@gmail.com>
+ * @date Sep 28, 2016
+ *
+ */
 public class UserBizImpl implements UserBiz {
 
     private UserDao dao = new UserDaoImplMySql();

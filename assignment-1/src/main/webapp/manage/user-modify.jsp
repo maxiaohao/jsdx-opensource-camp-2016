@@ -4,7 +4,6 @@
 <%@ page import="com.easybuy.control.biz.impl.UserBizImpl" %>
 <%@ page import="org.apache.commons.lang3.math.NumberUtils" %>
 <%@ page import="java.util.Calendar" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,7 +20,7 @@
 		<ul class="clearfix">
 			<li><a href="index.html">首页</a></li>
 			<li class="current"><a href="user.jsp">用户</a></li>
-			<li><a href="product.html">商品</a></li>
+			<li><a href="product.jsp">商品</a></li>
 			<li><a href="order.html">订单</a></li>
 			<li><a href="guestbook.html">留言</a></li>
 			<li><a href="news.html">新闻</a></li>
@@ -43,8 +42,8 @@
 				<dt>用户管理</dt>
 				<dd><em><a href="user-add.jsp">新增</a></em><a href="user.jsp">用户管理</a></dd>
 				<dt>商品信息</dt>
-				<dd><em><a href="productClass-add.html">新增</a></em><a href="productClass.html">分类管理</a></dd>
-				<dd><em><a href="product-add.html">新增</a></em><a href="product.html">商品管理</a></dd>
+				<dd><em><a href="productClass-add.jsp">新增</a></em><a href="productClass.jsp">分类管理</a></dd>
+				<dd><em><a href="product-add.jsp">新增</a></em><a href="product.jsp">商品管理</a></dd>
 				<dt>订单管理</dt>
 				<dd><a href="order.html">订单管理</a></dd>
 				<dt>留言管理</dt>
