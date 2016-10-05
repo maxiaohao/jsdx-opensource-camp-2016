@@ -38,7 +38,8 @@ public class AdminCheckFilter implements Filter {
         Boolean isAdmin = (Boolean) ((HttpServletRequest) request).getSession().getAttribute(
                 Constants.SESS_ATTR_NAME_IS_ADMIN);
         if (null == isAdmin || !isAdmin.booleanValue()) {
-            ((HttpServletResponse) response).sendRedirect(request.getServletContext().getContextPath()
+            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getSession()
+                    .getServletContext().getContextPath()
                     + "/" + Constants.PAGE_ACCESS_DENIED);
             return;
         }
