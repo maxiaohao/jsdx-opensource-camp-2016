@@ -109,12 +109,10 @@
 						<td class="field">送货地址：</td>
 						<td><input type="text" class="text" name="address" value="" /></td>
 					</tr>
-                    <!-- 
 					<tr>
 						<td class="field">头像：</td>
 						<td><input type="file" class="text" name="photo" /></td>
 					</tr>
-                     -->
                     <tr>
                         <td class="field">类型：</td>
                         <td>

@@ -55,7 +55,7 @@ public class ProductDaoImplMySql extends GenericDao implements ProductDao {
 
 
     @Override
-    public long getAllProductsCount() throws Throwable {
+    public long getAllProductCount() throws Throwable {
         return ((Number) query1stCell("select count(*) from easybuy_product")).longValue();
     }
 
@@ -67,26 +67,26 @@ public class ProductDaoImplMySql extends GenericDao implements ProductDao {
 
 
     @Override
-    public long getProductsCount(long epcId) throws Throwable {
-        return ((Number) query1stCell("select count(*) from easybuy_product where epc_id=epcId", epcId)).longValue();
+    public long getProductCountInCat(long epcId) throws Throwable {
+        return ((Number) query1stCell("select count(*) from easybuy_product where epc_id=?", epcId)).longValue();
     }
 
 
     @Override
-    public List<Product> getProducts(long epcId) throws Throwable {
+    public List<Product> getProductsInCat(long epcId) throws Throwable {
         return queryObjs(Product.class, "select * from easybuy_product where epc_id=? order by ep_id", epcId);
     }
 
 
     @Override
-    public List<Product> getProductsInRange(int startRow, int endRow) throws Throwable {
+    public List<Product> getProductsInRange(long startRow, long endRow) throws Throwable {
         return queryObjs(Product.class, "select * from easybuy_product order by ep_id limit ?,?", startRow, endRow
                 - startRow + 1);
     }
 
 
     @Override
-    public List<Product> getProductsInRange(long epcId, int startRow, int endRow) throws Throwable {
+    public List<Product> getProductsInCatInRange(long epcId, long startRow, long endRow) throws Throwable {
         return queryObjs(Product.class, "select * from easybuy_product where epc_id=? order by ep_id limit ?,?", epcId,
                 startRow, endRow
                         - startRow + 1);

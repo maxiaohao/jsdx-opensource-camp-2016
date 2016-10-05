@@ -25,21 +25,21 @@ public interface ProductDao {
     Product getProductById(long id) throws Throwable;
 
 
-    long getAllProductsCount() throws Throwable;
+    long getAllProductCount() throws Throwable;
 
 
     List<Product> getAllProducts() throws Throwable;
 
 
-    long getProductsCount(long epcId) throws Throwable;
+    long getProductCountInCat(long epcId) throws Throwable;
 
 
-    List<Product> getProducts(long epcId) throws Throwable;
+    List<Product> getProductsInCat(long epcId) throws Throwable;
 
 
-    List<Product> getProductsInRange(int startRow, int endRow) throws Throwable;
+    List<Product> getProductsInRange(long startRow, long endRow) throws Throwable;
 
 
-    List<Product> getProductsInRange(long epcId, int startRow, int endRow) throws Throwable;
+    List<Product> getProductsInCatInRange(long epcId, long startRow, long endRow) throws Throwable;
 
 }

@@ -2,18 +2,27 @@ package com.easybuy.control.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 import com.easybuy.control.Constants;
+import com.easybuy.control.biz.ProdCatBiz;
+import com.easybuy.control.biz.ProductBiz;
 import com.easybuy.control.biz.UserBiz;
+import com.easybuy.control.biz.impl.ProdCatBizImpl;
+import com.easybuy.control.biz.impl.ProductBizImpl;
 import com.easybuy.control.biz.impl.UserBizImpl;
 import com.easybuy.model.User;
 import com.easybuy.util.CrudResult;
 import com.easybuy.util.JsonUtils;
+import com.easybuy.util.PagingCriterion;
 
 /**
  * This servlet serves all the public (non-admin) CRUD requests and always print a json string of {@link CrudResult}.
@@ -42,7 +51,7 @@ public class PublicJsonCrudServlet extends HttpServlet {
 
         switch (model) {
 
-        case "user":
+        case "user": {
 
             UserBiz biz = new UserBizImpl();
 
@@ -114,6 +123,68 @@ public class PublicJsonCrudServlet extends HttpServlet {
             default:
             }
             break;
+        }
+
+        case "prodCat": {
+            ProdCatBiz biz = new ProdCatBizImpl();
+            switch (action) {
+            case "getAll": {
+                JsonUtils.writeAsJson(writer, biz.getAllProdCats());
+                break;
+            }
+            }
+            break;
+        }
+
+        case "product": {
+            ProductBiz biz = new ProductBizImpl();
+            switch (action) {
+            case "getFirst8": {
+                long totalCount = ((Long) biz.getAllProductCount().getData()).longValue();
+                String pageStr = request.getParameter("page");
+                String pageSizeStr = request.getParameter("pageSize");
+                PagingCriterion pagingCriterion;
+                try {
+                    pagingCriterion = new PagingCriterion(totalCount, null == pageStr ? 1
+                            : NumberUtils.toInt(pageStr), null == pageSizeStr ? 8 : NumberUtils.toInt(pageSizeStr));
+                } catch (Exception e) {
+                    JsonUtils.writeAsJson(writer, new CrudResult(false, "出错信息：" + e.getLocalizedMessage()));
+                    return;
+                }
+                CrudResult result = biz.getProductsInRange(pagingCriterion.getCurrentPageRowStart(),
+                        pagingCriterion.getCurrentPageRowEnd());
+                JsonUtils.writeAsJson(writer, result);
+                break;
+            }
+
+            case "getByEpcIdAndPage": {
+                long epcId = NumberUtils.toLong(request.getParameter("epcId"));
+                int curPage = NumberUtils.toInt(request.getParameter("curPage"));
+                int pageSize = NumberUtils.toInt(request.getParameter("pageSize"));
+
+                long rowCount = ((Long) biz.getProductCountInCat(epcId).getData()).longValue();
+                PagingCriterion pc = null;
+                try {
+                    pc = new PagingCriterion(rowCount, curPage, pageSize);
+                } catch (Exception e) {
+                    JsonUtils.writeAsJson(writer,
+                            new CrudResult(false, "paging calculation error：" + e.getLocalizedMessage()));
+                    return;
+                }
+
+                Map<String, Object> data = new HashMap<String, Object>();
+
+                data.put("products", biz.getProductsInCatInRange(epcId, pc.getCurrentPageRowStart(),
+                        pc.getCurrentPageRowEnd()).getData());
+                data.put("pageCount", pc.getTotalPageCount());
+
+                JsonUtils.writeAsJson(writer, new CrudResult(true, data));
+                break;
+            }
+            }
+            break;
+        }
+
         default:
         }
     }

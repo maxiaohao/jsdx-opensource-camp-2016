@@ -1,7 +1,6 @@
 package com.easybuy.control.biz;
 
 import com.easybuy.model.Product;
-import com.easybuy.util.PagingCriterion;
 import com.easybuy.util.CrudResult;
 
 /**
@@ -27,15 +26,36 @@ public interface ProductBiz {
     CrudResult getAllProducts();
 
 
-    CrudResult getProducts(long epcId);
+    CrudResult getAllProductCount();
 
 
-    CrudResult getProductsInRange(int startRow, int endRow);
+    CrudResult getProductsInCat(long epcId);
 
 
-    CrudResult getProductsInRange(long epcId, int startRow, int endRow);
+    CrudResult getProductCountInCat(long epcId);
 
 
-    PagingCriterion getPagingCriterion();
+    /**
+     *
+     * @param startRow
+     *            start row num (0-based) in total rows, inclusive
+     * @param startRow
+     *            end row num (0-based) in total rows, inclusive
+     * @return
+     */
+    CrudResult getProductsInRange(long startRow, long endRow);
+
+
+    /**
+     *
+     * @param epcId
+     *            product cat id
+     * @param startRow
+     *            start row num (0-based) in total rows, inclusive
+     * @param startRow
+     *            end row num (0-based) in total rows, inclusive
+     * @return
+     */
+    CrudResult getProductsInCatInRange(long epcId, long startRow, long endRow);
 
 }

@@ -5,7 +5,6 @@ import com.easybuy.control.dao.ProductDao;
 import com.easybuy.control.dao.impl.ProductDaoImplMySql;
 import com.easybuy.model.Product;
 import com.easybuy.util.CrudResult;
-import com.easybuy.util.PagingCriterion;
 
 /**
  *
@@ -108,7 +107,40 @@ public class ProductBizImpl implements ProductBiz {
 
 
     @Override
-    public CrudResult getProductsInRange(int startRow, int endRow) {
+    public CrudResult getAllProductCount() {
+        try {
+            return new CrudResult(true, dao.getAllProductCount());
+        } catch (Throwable e) {
+            return new CrudResult(false, "Exception occurred while reading products from database. Error msg: "
+                    + e.getLocalizedMessage());
+        }
+    }
+
+
+    @Override
+    public CrudResult getProductsInCat(long epcId) {
+        try {
+            return new CrudResult(true, dao.getProductsInCat(epcId));
+        } catch (Throwable e) {
+            return new CrudResult(false, "Exception occurred while reading products from database. Error msg: "
+                    + e.getLocalizedMessage());
+        }
+    }
+
+
+    @Override
+    public CrudResult getProductCountInCat(long epcId) {
+        try {
+            return new CrudResult(true, dao.getProductCountInCat(epcId));
+        } catch (Throwable e) {
+            return new CrudResult(false, "Exception occurred while reading products from database. Error msg: "
+                    + e.getLocalizedMessage());
+        }
+    }
+
+
+    @Override
+    public CrudResult getProductsInRange(long startRow, long endRow) {
         try {
             return new CrudResult(true, dao.getProductsInRange(startRow, endRow));
         } catch (Throwable e) {
@@ -119,27 +151,13 @@ public class ProductBizImpl implements ProductBiz {
 
 
     @Override
-    public CrudResult getProducts(long epcId) {
+    public CrudResult getProductsInCatInRange(long epcId, long startRow, long endRow) {
         try {
-            return new CrudResult(true, dao.getAllProducts());
+            return new CrudResult(true, dao.getProductsInCatInRange(epcId,startRow, endRow));
         } catch (Throwable e) {
             return new CrudResult(false, "Exception occurred while reading products from database. Error msg: "
                     + e.getLocalizedMessage());
         }
-    }
-
-
-    @Override
-    public CrudResult getProductsInRange(long epcId, int startRow, int endRow) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-
-    @Override
-    public PagingCriterion getPagingCriterion() {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }
