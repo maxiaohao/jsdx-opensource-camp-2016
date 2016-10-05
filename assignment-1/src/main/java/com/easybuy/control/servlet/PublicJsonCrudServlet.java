@@ -170,6 +170,12 @@ public class PublicJsonCrudServlet extends HttpServlet {
                 JsonUtils.writeAsJson(writer, new CrudResult(true, data));
                 break;
             }
+
+            case "getProductDetail": {
+                long epId = NumberUtils.toLong(request.getParameter("epId"));
+                JsonUtils.writeAsJson(writer, biz.getProductById(epId));
+                break;
+            }
             }
             break;
         }

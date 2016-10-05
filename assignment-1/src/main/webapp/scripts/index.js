@@ -14,6 +14,28 @@ function renderTopRightInfo() {
                 $("#onlineUserNameDesc").html(ret.data + '已登录');
                 $("#onlineUserNameDesc").show();
                 $("#logoutLink").show();
+                // 退出并返回首页
+                $("#logoutLink").click(function() {
+                    $.ajax({
+                        url : 'public-json-crud-servlet',
+                        method : 'post',
+                        data : {
+                            model : 'user',
+                            action : 'logout'
+                        },
+                        success : function(ret) {
+                            if (ret.success) {
+                                // reload index page
+                                window.location.href = "index.html";
+                            } else {
+                                alert("退出登录时出错: " + ret.msg);
+                            }
+                        },
+                        error : function() {
+                            $.messager.alert('Internal Error', 'Failed get response from server!', 'error');
+                        }
+                    });
+                });
             } else {
                 $("#loginLink").show();
                 $("#registerLink").show();
@@ -40,6 +62,7 @@ function renderTopRightInfo() {
             $.messager.alert('Internal Error', 'Failed get response from server!', 'error');
         }
     });
+
 };
 
 // 列出左侧商品分类
@@ -109,29 +132,6 @@ function listTopProducts(containerSelector, topCount) {
     });
 };
 
-// 退出并返回首页
-$("#logoutLink").click(function() {
-    $.ajax({
-        url : 'public-json-crud-servlet',
-        method : 'post',
-        data : {
-            model : 'user',
-            action : 'logout'
-        },
-        success : function(ret) {
-            if (ret.success) {
-                // reload index page
-                window.location.href = "index.html";
-            } else {
-                alert("退出登录时出错: " + ret.msg);
-            }
-        },
-        error : function() {
-            $.messager.alert('Internal Error', 'Failed get response from server!', 'error');
-        }
-    });
-});
-
 // 渲染product-list.html
 function renderProductListByCat(epcId, curPage, pageSize) {
     $.ajax({
@@ -180,6 +180,36 @@ function renderProductListByCat(epcId, curPage, pageSize) {
                                         + "' target='_blank'>" + p.ep_name + "</a></dd><dd class='price'>￥"
                                         + p.ep_price + "</dd></dl></li>");
                     }
+                } else {
+                    alert('后台返回了无效数据，请检查服务端程序');
+                }
+            } else {
+                alert('商品数据读取错误：' + ret.msg);
+            }
+        },
+        error : function() {
+            $.messager.alert('Internal Error', 'Failed get response from server!', 'error');
+        }
+    });
+}
+
+function renderProductDetail(epId) {
+    $.ajax({
+        url : 'public-json-crud-servlet',
+        method : 'post',
+        data : {
+            model : 'product',
+            action : 'getProductDetail',
+            epId : epId
+        },
+        success : function(ret) {
+            if (ret.success) {
+                if (ret.data) {
+                    $("#epName").append(ret.data.ep_name);
+                    $("#epImg").attr("src", "images/product/" + ret.data.ep_file_name);
+                    $("#epPrice").append("￥" + ret.data.ep_price);
+                    $("#epStock").append("库存: " + ret.data.ep_stock);
+                    $("#epDescription").append("描述: " + ret.data.ep_description);
                 } else {
                     alert('后台返回了无效数据，请检查服务端程序');
                 }
