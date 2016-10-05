@@ -43,19 +43,15 @@ public class PublicJsonCrudServlet extends HttpServlet {
         switch (model) {
 
         case "user":
-            String userName = null;
-            String passWord = null;
-            String answer = null;
-            String captcherAnswer = null;
 
             UserBiz biz = new UserBizImpl();
 
             switch (action) {
-            case "login":
-                userName = request.getParameter("userName");
-                passWord = request.getParameter("passWord");
-                answer = request.getParameter("answer");
-                captcherAnswer = (String) request.getSession().getAttribute(
+            case "login": {
+                String userName = request.getParameter("userName");
+                String passWord = request.getParameter("passWord");
+                String answer = request.getParameter("answer");
+                String captcherAnswer = (String) request.getSession().getAttribute(
                         Constants.SESS_ATTR_NAME_CAPTCHA_ANSWER);
                 if (!captcherAnswer.equalsIgnoreCase(answer)) {
                     JsonUtils.writeAsJson(writer, new CrudResult(false, "验证码不正确"));
@@ -76,6 +72,7 @@ public class PublicJsonCrudServlet extends HttpServlet {
                     }
                 }
                 break;
+            }
             case "logout":
                 request.getSession().setAttribute(Constants.SESS_ATTR_NAME_USERNAME, null);
                 JsonUtils.writeAsJson(writer, new CrudResult(true));
@@ -86,12 +83,12 @@ public class PublicJsonCrudServlet extends HttpServlet {
             case "is_current_user_admin":
                 JsonUtils.writeAsJson(writer, biz.isCurrentUserAdmin(request));
                 break;
-            case "register":
-                userName = request.getParameter("userName");
-                passWord = request.getParameter("passWord");
+            case "register": {
+                String userName = request.getParameter("userName");
+                String passWord = request.getParameter("passWord");
                 String rePassWord = request.getParameter("rePassWord");
-                answer = request.getParameter("answer");
-                captcherAnswer = (String) request.getSession().getAttribute(
+                String answer = request.getParameter("answer");
+                String captcherAnswer = (String) request.getSession().getAttribute(
                         Constants.SESS_ATTR_NAME_CAPTCHA_ANSWER);
                 if (!captcherAnswer.equalsIgnoreCase(answer)) {
                     JsonUtils.writeAsJson(writer, new CrudResult(false, "验证码不正确"));
@@ -113,6 +110,7 @@ public class PublicJsonCrudServlet extends HttpServlet {
                     JsonUtils.writeAsJson(writer, ret);
                 }
                 break;
+            }
             default:
             }
             break;
