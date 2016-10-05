@@ -81,7 +81,8 @@ function listTopProducts(containerSelector, topCount) {
         method : 'post',
         data : {
             model : 'product',
-            action : 'getFirst' + topCount
+            action : 'getTopProducts',
+            topCount : topCount
         },
         success : function(ret) {
             if (ret.success) {
@@ -92,8 +93,8 @@ function listTopProducts(containerSelector, topCount) {
                                 "<li><dl><dt><a href='product-view.html?epId=" + p.ep_id
                                         + "' target='_blank'><img src='images/product/" + p.ep_file_name
                                         + "' /></a></dt><dd class='title'><a href='product-view.html=" + p.ep_id
-                                        + "' target='_blank'>" + p.ep_name + "</a></dd><dd class='price'>￥" + p.ep_price
-                                        + "</dd></dl></li>");
+                                        + "' target='_blank'>" + p.ep_name + "</a></dd><dd class='price'>￥"
+                                        + p.ep_price + "</dd></dl></li>");
                     }
                 } else {
                     alert('商品数据为空,请检查后台数据库表配置');
@@ -176,11 +177,11 @@ function renderProductListByCat(epcId, curPage, pageSize) {
                                 "<li><dl><dt><a href='product-view.html?epId=" + p.ep_id
                                         + "' target='_blank'><img src='images/product/" + p.ep_file_name
                                         + "' /></a></dt><dd class='title'><a href='product-view.html?epId=" + p.ep_id
-                                        + "' target='_blank'>" + p.ep_name + "</a></dd><dd class='price'>￥" + p.ep_price
-                                        + "</dd></dl></li>");
+                                        + "' target='_blank'>" + p.ep_name + "</a></dd><dd class='price'>￥"
+                                        + p.ep_price + "</dd></dl></li>");
                     }
                 } else {
-                    alert('商品数据为空,请检查后台数据库表配置');
+                    alert('后台返回了无效数据，请检查服务端程序');
                 }
             } else {
                 alert('商品数据读取错误：' + ret.msg);

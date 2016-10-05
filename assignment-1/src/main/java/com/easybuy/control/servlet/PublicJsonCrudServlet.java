@@ -139,20 +139,9 @@ public class PublicJsonCrudServlet extends HttpServlet {
         case "product": {
             ProductBiz biz = new ProductBizImpl();
             switch (action) {
-            case "getFirst8": {
-                long totalCount = ((Long) biz.getAllProductCount().getData()).longValue();
-                String pageStr = request.getParameter("page");
-                String pageSizeStr = request.getParameter("pageSize");
-                PagingCriterion pagingCriterion;
-                try {
-                    pagingCriterion = new PagingCriterion(totalCount, null == pageStr ? 1
-                            : NumberUtils.toInt(pageStr), null == pageSizeStr ? 8 : NumberUtils.toInt(pageSizeStr));
-                } catch (Exception e) {
-                    JsonUtils.writeAsJson(writer, new CrudResult(false, "出错信息：" + e.getLocalizedMessage()));
-                    return;
-                }
-                CrudResult result = biz.getProductsInRange(pagingCriterion.getCurrentPageRowStart(),
-                        pagingCriterion.getCurrentPageRowEnd());
+            case "getTopProducts": {
+                long topCount = NumberUtils.toLong(request.getParameter("topCount"));
+                CrudResult result = biz.getProductsInRange(0, topCount - 1);
                 JsonUtils.writeAsJson(writer, result);
                 break;
             }
