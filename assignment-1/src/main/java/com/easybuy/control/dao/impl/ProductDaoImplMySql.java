@@ -34,7 +34,7 @@ public class ProductDaoImplMySql extends GenericDao implements ProductDao {
 
     @Override
     public boolean removeProduct(long id) throws Throwable {
-        return exec("delete from easybuy_product where epc_id=?", id) > 0;
+        return exec("delete from easybuy_product where ep_id=?", id) > 0;
     }
 
 

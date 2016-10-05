@@ -24,7 +24,7 @@ public class ProductBizImpl implements ProductBiz {
             return new CrudResult(false, "invalid Product null!");
         }
         if (null == obj.getEp_name() || obj.getEp_name().trim().length() == 0) {
-            return new CrudResult(false, "产品名称不能为空");
+            return new CrudResult(false, "商品名称不能为空");
         }
         try {
 
@@ -63,7 +63,7 @@ public class ProductBizImpl implements ProductBiz {
         }
         String newName = obj.getEp_name();
         if (null == newName) {
-            return new CrudResult(false, "产品名称不能为空");
+            return new CrudResult(false, "商品名称不能为空");
         }
         try {
             boolean ret = dao.updateProduct(id, obj);

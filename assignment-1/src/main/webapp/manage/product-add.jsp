@@ -1,4 +1,9 @@
 <%@ page language="java" pageEncoding="utf-8"%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.easybuy.control.Constants" %>
+<%@ page import="com.easybuy.model.*" %>
+<%@ page import="com.easybuy.control.biz.impl.*" %>
+<%@ page import="org.apache.commons.lang3.math.NumberUtils" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -51,45 +56,51 @@
 	<div class="main">
 		<h2>添加商品</h2>
 		<div class="manage">
-			<form action="manage-result.html">
+            <%
+                List<ProdCat> cats=(List<ProdCat>)new ProdCatBizImpl().getAllProdCats().getData();
+            %>
+            <form action="admin-crud-servlet" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="model" value="product" />
+                <input type="hidden" name="action" value="add" />
 				<table class="form">
 					<tr>
-						<td class="field">商品名称：</td>
-						<td><input type="text" class="text" name="productName" value="铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机" /></td>
-					</tr>
-					<tr>
-						<td class="field">所属分类：</td>
-						<td>
-							<select name="parentId">
-								<option value="1">电器</option>
-								<option value="3">├ 电器</option>
-								<option value="3">└ 电器</option>
-								<option value="2">衣服</option>
-								<option value="3">├ 电器</option>
-								<option value="3">└ 电器</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td class="field">商品图片：</td>
-						<td><input type="file" class="text" name="photo" /></td>
-					</tr>
-					<tr>
-						<td class="field">商品价格：</td>
-						<td><input type="text" class="text tiny" name="productPrice" /> 元</td>
-					</tr>
-					<tr>
-						<td class="field">品牌：</td>
-						<td><input type="text" class="text" name="productName" /></td>
-					</tr>
-					<tr>
-						<td class="field">库存：</td>
-						<td><input type="text" class="text tiny" name="productName" /></td>
-					</tr>
-					<tr>
-						<td class="field">条码号：</td>
-						<td><input type="text" class="text" name="productName" /></td>
-					</tr>
+                        <td class="field">商品名称：</td>
+                        <td><input type="text" class="text" name="productName" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="field">所属分类：</td>
+                        <td>
+                            <select name="epcId">
+                                <%
+                                    for(ProdCat cat: cats){
+                                        out.println("<option value=\""+cat.getEpc_id()+"\" >"+cat.getEpc_name()+"</option>");
+                                    }
+                                %>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="field">商品图片：</td>
+                        <td><input type="file" class="text" name="photo" /></td>
+                    </tr>
+                    <tr>
+                        <td class="field">商品价格：</td>
+                        <td><input type="text" class="text tiny" name="price" value="" /> 元</td>
+                    </tr>
+                    <!-- 
+                    <tr>
+                        <td class="field">品牌：</td>
+                        <td><input type="text" class="text" name="productName" /></td>
+                    </tr>
+                     -->
+                    <tr>
+                        <td class="field">库存：</td>
+                        <td><input type="text" class="text tiny" name="stock" value="" /></td>
+                    </tr>
+                    <tr>
+                        <td class="field">描述：</td>
+                        <td><input type="text" class="text" name="description" value="" /></td>
+                    </tr>
 					<tr>
 						<td></td>
 						<td><label class="ui-blue"><input type="submit" name="submit" value="添加" /></label></td>

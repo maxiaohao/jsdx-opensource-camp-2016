@@ -70,20 +70,10 @@
                     <td class="first w4 c">${p.ep_id}</td>
                     <td class="thumb"><img src="../images/product/${p.ep_file_name }" /><a href="../product-view.html?epId=${p.ep_id}" target="_blank">${p.ep_name }</a></td>
                     <td class="w1 c"><a href="product-modify.jsp?epId=${p.ep_id }">修改</a> 
-                    <a href="admin-crud-servlet?model=product&action=delete&epId=${cat.ep_id}">删除</a></td>
+                    <a href="admin-crud-servlet?model=product&action=delete&epId=${p.ep_id}">删除</a></td>
                 </tr>
                 </c:forEach>
                 
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="thumb"><img src="../images/product/0_tiny.gif" /><a href="../product-view.html" target="_blank">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-					<td class="w1 c"><a href="product-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
-				<tr>
-					<td class="first w4 c">1</td>
-					<td class="thumb"><img src="../images/product/0_tiny.gif" /><a href="../product-view.html" target="_blank">铁三角 Audio-Technica ATH-EQ300M-SV 银色 挂耳式耳机</a></td>
-					<td class="w1 c"><a href="product-modify.jsp">修改</a> <a href="javascript:Delete(1);">删除</a></td>
-				</tr>
 			</table>
 		</div>
 	</div>
