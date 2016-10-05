@@ -1,5 +1,11 @@
 package com.easybuy.control;
 
+/**
+ *
+ * @author xma11 <maxiaohao@gmail.com>
+ * @date Sep 28, 2016
+ *
+ */
 public interface Constants {
 
     String SESS_ATTR_NAME_USERNAME = "userName";

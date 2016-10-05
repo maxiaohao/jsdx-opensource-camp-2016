@@ -7,7 +7,7 @@ import com.easybuy.model.User;
 /**
  * DB CRUD interface for {@link User}.
  *
- * @author maxiaohao <maxiaohao@gmail.com>
+ * @author xma11 <maxiaohao@gmail.com>
  * @date Sep 28, 2016
  *
  */

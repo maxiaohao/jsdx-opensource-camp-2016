@@ -7,7 +7,7 @@ import com.easybuy.util.CrudResult;
 
 /**
  *
- * @author maxiaohao <maxiaohao@gmail.com>
+ * @author xma11 <maxiaohao@gmail.com>
  * @date Sep 28, 2016
  *
  */

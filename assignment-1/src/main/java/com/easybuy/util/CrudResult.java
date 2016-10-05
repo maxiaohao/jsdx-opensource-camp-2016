@@ -3,7 +3,7 @@ package com.easybuy.util;
 /**
  * Wrap of a result for generic CRUD (Create, Read, Update, Delete) operations.
  *
- * @author maxiaohao <maxiaohao@gmail.com>
+ * @author xma11 <maxiaohao@gmail.com>
  * @date Sep 28, 2016
  */
 public class CrudResult {

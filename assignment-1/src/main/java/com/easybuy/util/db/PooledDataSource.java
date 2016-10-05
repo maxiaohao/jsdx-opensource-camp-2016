@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  * Data source back-ended by commons-dbcp which provides a database connection pool.
  *
- * @author maxiaohao <maxiaohao@gmail.com>
- * @date Sep 23, 2016
+ * @author xma11 <maxiaohao@gmail.com>
+ * @date Sep 28, 2016
  *
  */
 public class PooledDataSource {

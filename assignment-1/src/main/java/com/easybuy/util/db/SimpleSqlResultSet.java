@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * A custom SQL result set that simplifies data (size/row/cell) and column name retrieval.
  *
- * @author maxiaohao <maxiaohao@gmail.com>
- * @date Sep 23, 2016
+ * @author xma11 <maxiaohao@gmail.com>
+ * @date Sep 28, 2016
  *
  */
 public class SimpleSqlResultSet {

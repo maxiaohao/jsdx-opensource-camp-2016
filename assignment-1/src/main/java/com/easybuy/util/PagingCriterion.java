@@ -4,7 +4,7 @@ package com.easybuy.util;
  * A paging criterion utilizes the paging calculation work, providing start/end/total row number on a specified page as
  * well as moveToNextPage()/moveToPreviousPage().
  *
- * @author maxiaohao <maxiaohao@gmail.com>
+ * @author xma11 <maxiaohao@gmail.com>
  * @date Sep 30, 2016
  *
  */
