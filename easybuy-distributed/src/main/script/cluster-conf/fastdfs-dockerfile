@@ -1,0 +1,15 @@
+# this Dockerfile must be run from the project root directory (easybuy-distributed) using "-f" in order to access the third-party files
+FROM centos:6
+
+ENV INST_STUFF /tmp/install-stuff
+ENV INST_TMP /tmp/install-tmp
+
+COPY ./third-party $INST_STUFF
+COPY ./src/main/script/cluster-conf/fastdfs-install.sh $INST_STUFF
+
+RUN yum -y install gcc gcc-c++ autoconf automake zlib zlib-devel openssl openssl-devel pcre-devel libevent iputils && yum clean all 
+RUN /bin/bash $INST_STUFF/fastdfs-install.sh && rm -rf $INST_STUFF $INST_TMP
+
+COPY ./src/main/script/cluster-conf/fastdfs-nginx.conf /usr/local/nginx/conf/nginx.conf
+
+#ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]
