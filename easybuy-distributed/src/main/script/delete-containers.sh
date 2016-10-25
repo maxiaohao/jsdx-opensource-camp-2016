@@ -5,4 +5,4 @@ if [ "$(/usr/bin/whoami)" != "root" ] ; then
     exit 1
 fi
 
-docker network create -d bridge --subnet 192.168.25.0/24 ebd-network
+docker ps -a | grep "ebd-img-" | grep -v grep | awk '{printf "%s ",$1}' | xargs docker rm
