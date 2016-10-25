@@ -18,9 +18,11 @@ cp $INST_TMP/fastdfs-5.05/conf/* /etc/fdfs/
 # configure fastdfs (tracker & storage nodes use the same conf)
 mkdir -p /opt/fastdfs/storage
 sed -i 's/base_path=\/home\/yuqing\/fastdfs/base_path=\/opt\/fastdfs/g' /etc/fdfs/tracker.conf
+sed -i 's/http\.server_port=8080/http\.server_port=80/g' /etc/fdfs/tracker.conf
 sed -i 's/base_path=\/home\/yuqing\/fastdfs/base_path=\/opt\/fastdfs/g' /etc/fdfs/storage.conf
 sed -i 's/store_path0=\/home\/yuqing\/fastdfs/store_path0=\/opt\/fastdfs\/storage/g' /etc/fdfs/storage.conf
 sed -i 's/tracker_server=192\.168\.209\.121:22122/tracker_server=fastdfs-tracker:22122/g' /etc/fdfs/storage.conf
+sed -i 's/http\.server_port=8888/http\.server_port=80/g' /etc/fdfs/storage.conf
 sed -i 's/base_path=\/home\/yuqing\/fastdfs/base_path=\/opt\/fastdfs/g' /etc/fdfs/client.conf
 sed -i 's/tracker_server=192\.168\.0\.197:22122/tracker_server=fastdfs-tracker:22122/g' /etc/fdfs/client.conf
 
