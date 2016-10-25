@@ -106,7 +106,7 @@ echo "redis slave 1 started"
 
 docker run --net $NETWORK_NAME --ip $IP_REDIS_SLAVE2 --hostname $HOST_REDIS_SLAVE2 $ADD_HOST_OPT --name $HOST_REDIS_SLAVE2 -dit ebd-img-redis /bin/bash
 docker exec $HOST_REDIS_SLAVE2 service sshd start
-docker exec $HOST_REDIS_SLAVE1 /usr/sbin/redis-server /etc/redis.slave.conf
+docker exec $HOST_REDIS_SLAVE2 /usr/sbin/redis-server /etc/redis.slave.conf
 echo "redis slave 2 started"
 
 docker run --net $NETWORK_NAME --ip $IP_SOLR_MASTER --hostname $HOST_SOLR_MASTER $ADD_HOST_OPT --name $HOST_SOLR_MASTER -dit ebd-img-solr /bin/bash
