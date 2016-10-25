@@ -2,6 +2,7 @@
 FROM ebd-img-common
 
 ENV INST_STUFF /tmp/install-stuff
+RUN mkdir -p $INST_STUFF
 
 COPY ./src/main/script/cluster-conf/redis-install.sh $INST_STUFF
 
