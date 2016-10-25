@@ -1,0 +1,11 @@
+# this Dockerfile must be run from the project root directory (easybuy-distributed) using "-f" in order to access the third-party files
+FROM centos:6
+
+ENV INST_STUFF /tmp/install-stuff
+
+COPY ./third-party $INST_STUFF
+
+RUN yum -y install $INST_STUFF/epel-release-6-8.noarch.rpm
+RUN yum -y install nginx redis mysql-server iputils openssh-server openssh-clients vim java-1.8.0-openjdk-headless gcc gcc-c++ autoconf automake zlib zlib-devel openssl openssl-devel pcre-devel libevent && yum clean all && rm -rf $INST_STUFF
+
+#ENTRYPOINT ["", "", ""]
