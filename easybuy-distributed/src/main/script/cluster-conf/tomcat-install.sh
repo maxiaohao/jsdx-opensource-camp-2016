@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this file should only be called in 'tomcat-dockerfile', to setup fastdfs and its nginx module in docker image
+# this file should only be called in 'tomcat-dockerfile', to setup 6 tomcats which would run on different ports to avoid conflict
 
 mkdir -p $INST_TMP
 

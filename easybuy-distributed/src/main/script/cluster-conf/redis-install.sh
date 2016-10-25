@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this file should only be called in 'redis-dockerfile', to setup fastdfs and its nginx module in docker image
+# this file should only be called in 'redis-dockerfile', to setup basic redis.master.conf and redis.slave.conf
 
 cp /etc/redis.conf /etc/redis.master.conf
 cp /etc/redis.conf /etc/redis.slave.conf
