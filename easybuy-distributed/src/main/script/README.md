@@ -1,7 +1,7 @@
-# prerequisites #
+# Prerequisites #
 - Docker is needed and latest version is encouraged (while 1.10.1+ should work) since there are some new network/host related arguments used in the scripts. However, I am not sure of the minium version.
 
-# quick start #
+# Quick Start #
 These scripts help to create a dozen of containers (as vms) along with your host in a private network utilizing the development of easybuy-distributed.
 ```
 ./create-network.sh
@@ -18,12 +18,13 @@ TIPS:
 - There are some `delete-*.sh` and `kill-*.sh` you can make use of if you need to clear up things quickly.
 - It is recommended to pull the official centos 6 image to local (`docker pull centos:6`) because all our images are based on it and that will accelerate repeated common image rebuilding opeartion.
 
-# specs #
+
+# Specs #
 
 ### network (1) ###
-- ebd-network
+- ebd-network (192.168.25.0/24)
 
-### images built (7) ###
+### images built (1+6) ###
 - ebd-img-common (only works as a dependency for the rest 6 images)
 - ebd-img-fastdfs
 - ebd-img-mysql
@@ -32,7 +33,7 @@ TIPS:
 - ebd-img-solr
 - ebd-img-tomcat
 
-### containers(vms) (13) ###
+### containers(vms) (13+1) ###
 - fastdfs-tracker
 - fastdfs-storage1
 - fastdfs-storage2
@@ -47,8 +48,27 @@ TIPS:
 - tomcat1
 - tomcat2
 
+| Hostname         | Ip Addr          |  Services/Ports    | Remarks                                             |
+| -------------    |------------------|--------------------|-----------------------------------------------------|
+| fastdfs-tracker  | 192.168.25.133   | tracker (22122)    |                                                     |
+| fastdfs-storage1 | 192.168.25.134   | storage 1 (22122) + nginx (80)      |                                    |
+| fastdfs-storage2 | 192.168.25.135   | storage 2 (22122) + nginx (80)      |                                    |
+| mysql            | 192.168.25.11    | dummy mysql(3306)  | need to init db on container start                  |
+| nginx            | 192.168.25.2     | 1) virtual-hosting all domains like search.easybuy.com, sso.easybuy.com, etc.(forwarding to specific tomcat instance per domain name); 2) Load balancing tomcats ranging on tomcat1 and tomcat2; 3) Listen on port 80   |      |
+| redis-master     | 192.168.25.151   | master (6379)      | need syncing of data to mysql, including on delete  |
+| redis-slave1     | 192.168.25.152   | slave1 (6379)      |                                                     |
+| redis-slave2     | 192.168.25.153   | slave2 (6379)      |                                                     |
+| solr-master      | 192.168.25.161   | (N/A)              |  TODO                                               |
+| solr-slave1      | 192.168.25.162   | (N/A)              |  TODO                                               |
+| solr-slave2      | 192.168.25.163   | (N/A)              |  TODO                                               |
+| tomcat1          | 192.168.25.21    | 6 tomcats: portal(8081), manager(8082), rest(8083), search(8084), sso(8085), order(8086)    |      |
+| tomcat2          | 192.168.25.22    | replica of tomcat1 |                                                     |
+| (your laptop)    | 192.168.25.1     |                    |                                                     |
+
+
+
 ### hosts ###
-- You may need to append the following into the hosts (e.g. /etc/hosts) file on your host(laptop) so that you could access the containers (vms) with hostname:
+- You may need to append the following into the hosts (e.g. /etc/hosts) file on your host(laptop) so that you could access the containers (vms) using hostname instead of ip address.
 ```
 # ebd hosts
 192.168.25.1 laptop #(an alias of your host)
@@ -76,10 +96,9 @@ TIPS:
 192.168.25.2 manager.easybuy.com
 ```
 
-### TODO ###
+# TODO #
 - configure redis auto syncing to mysql
 - add solr (for now its image/containers are empty)
 
-### Licence ###
+# Licence #
 MIT
-
