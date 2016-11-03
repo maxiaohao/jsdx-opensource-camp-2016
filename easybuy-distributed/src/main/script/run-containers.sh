@@ -63,88 +63,137 @@ ADD_HOST_OPT=$ADD_HOST_OPT" --add-host sso.easybuy.com:$IP_NGINX"
 ADD_HOST_OPT=$ADD_HOST_OPT" --add-host order.easybuy.com:$IP_NGINX"
 ADD_HOST_OPT=$ADD_HOST_OPT" --add-host manager.easybuy.com:$IP_NGINX"
 
-docker run --net $NETWORK_NAME --ip $IP_FASTDFS_TRACKER --hostname $HOST_FASTDFS_TRACKER $ADD_HOST_OPT --name $HOST_FASTDFS_TRACKER -dit ebd-img-fastdfs /bin/bash
-docker exec $HOST_FASTDFS_TRACKER service sshd start
-docker exec $HOST_FASTDFS_TRACKER /usr/local/nginx/sbin/nginx
-docker exec $HOST_FASTDFS_TRACKER /usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf
-echo "fastdfs tracker started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_FASTDFS_TRACKER)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_FASTDFS_TRACKER --hostname $HOST_FASTDFS_TRACKER $ADD_HOST_OPT --name $HOST_FASTDFS_TRACKER -dit ebd-img-fastdfs /bin/bash
+    docker exec $HOST_FASTDFS_TRACKER service sshd start
+    docker exec $HOST_FASTDFS_TRACKER /usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf
+    echo "### fastdfs tracker started ###"
+else
+    echo "### fastdfs tracker was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_FASTDFS_STORAGE1 --hostname $HOST_FASTDFS_STORAGE1 $ADD_HOST_OPT --name $HOST_FASTDFS_STORAGE1 -dit ebd-img-fastdfs /bin/bash
-docker exec $HOST_FASTDFS_STORAGE1 service sshd start
-docker exec $HOST_FASTDFS_STORAGE1 /usr/local/nginx/sbin/nginx
-echo "fastdfs storage 1 is initializing fs structure for the first run, which may take a while..."
-docker exec $HOST_FASTDFS_STORAGE1 /usr/bin/fdfs_storaged /etc/fdfs/storage.conf start
-echo "fastdfs storage 1 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_FASTDFS_STORAGE1)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_FASTDFS_STORAGE1 --hostname $HOST_FASTDFS_STORAGE1 $ADD_HOST_OPT --name $HOST_FASTDFS_STORAGE1 -dit ebd-img-fastdfs /bin/bash
+    docker exec $HOST_FASTDFS_STORAGE1 service sshd start
+    docker exec $HOST_FASTDFS_STORAGE1 /usr/local/nginx/sbin/nginx
+    docker exec $HOST_FASTDFS_STORAGE1 /usr/bin/fdfs_storaged /etc/fdfs/storage.conf start
+    echo "### fastdfs storage 1 started ###"
+else
+    echo "### fastdfs storage 1 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_FASTDFS_STORAGE2 --hostname $HOST_FASTDFS_STORAGE2 $ADD_HOST_OPT --name $HOST_FASTDFS_STORAGE2 -dit ebd-img-fastdfs /bin/bash
-docker exec $HOST_FASTDFS_STORAGE2 service sshd start
-docker exec $HOST_FASTDFS_STORAGE2 /usr/local/nginx/sbin/nginx
-echo "fastdfs storage 2 is initializing fs structure for the first run, which may take a while..."
-docker exec $HOST_FASTDFS_STORAGE2 /usr/bin/fdfs_storaged /etc/fdfs/storage.conf start
-echo "fastdfs storage 2 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_FASTDFS_STORAGE2)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_FASTDFS_STORAGE2 --hostname $HOST_FASTDFS_STORAGE2 $ADD_HOST_OPT --name $HOST_FASTDFS_STORAGE2 -dit ebd-img-fastdfs /bin/bash
+    docker exec $HOST_FASTDFS_STORAGE2 service sshd start
+    docker exec $HOST_FASTDFS_STORAGE2 /usr/local/nginx/sbin/nginx
+    docker exec $HOST_FASTDFS_STORAGE2 /usr/bin/fdfs_storaged /etc/fdfs/storage.conf start
+    echo "### fastdfs storage 2 started ###"
+else
+    echo "### fastdfs storage 2 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_MYSQL --hostname $HOST_MYSQL $ADD_HOST_OPT --name $HOST_MYSQL -dit ebd-img-mysql /bin/bash
-docker exec $HOST_MYSQL service sshd start
-docker exec $HOST_MYSQL service mysqld start
-#docker exec $HOST_MYSQL # TODO command (to init db)
-echo "mysql server started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_MYSQL)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_MYSQL --hostname $HOST_MYSQL $ADD_HOST_OPT --name $HOST_MYSQL -dit ebd-img-mysql /bin/bash
+    docker exec $HOST_MYSQL service sshd start
+    docker exec $HOST_MYSQL service mysqld start
+    #docker exec $HOST_MYSQL # TODO command (to init db)
+    echo "### mysql server started ###"
+else
+    echo "### mysql server was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_NGINX --hostname $HOST_NGINX $ADD_HOST_OPT --name $HOST_NGINX -dit ebd-img-nginx /bin/bash
-docker exec $HOST_NGINX service sshd start
-docker exec $HOST_NGINX service nginx start
-echo "nginx server started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_NGINX)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_NGINX --hostname $HOST_NGINX $ADD_HOST_OPT --name $HOST_NGINX -dit ebd-img-nginx /bin/bash
+    docker exec $HOST_NGINX service sshd start
+    docker exec $HOST_NGINX service nginx start
+    echo "### nginx server started ###"
+else
+    echo "### nginx server was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_REDIS_MASTER --hostname $HOST_REDIS_MASTER $ADD_HOST_OPT --name $HOST_REDIS_MASTER -dit ebd-img-redis /bin/bash
-docker exec $HOST_REDIS_MASTER service sshd start
-docker exec $HOST_REDIS_MASTER /usr/sbin/redis-server /etc/redis.master.conf
-echo "redis master started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_REDIS_MASTER)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_REDIS_MASTER --hostname $HOST_REDIS_MASTER $ADD_HOST_OPT --name $HOST_REDIS_MASTER -dit ebd-img-redis /bin/bash
+    docker exec $HOST_REDIS_MASTER service sshd start
+    docker exec $HOST_REDIS_MASTER /usr/sbin/redis-server /etc/redis.master.conf
+    echo "### redis master started ###"
+else
+    echo "### redis master was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_REDIS_SLAVE1 --hostname $HOST_REDIS_SLAVE1 $ADD_HOST_OPT --name $HOST_REDIS_SLAVE1 -dit ebd-img-redis /bin/bash
-docker exec $HOST_REDIS_SLAVE1 service sshd start
-docker exec $HOST_REDIS_SLAVE1 /usr/sbin/redis-server /etc/redis.slave.conf
-echo "redis slave 1 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_REDIS_SLAVE1)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_REDIS_SLAVE1 --hostname $HOST_REDIS_SLAVE1 $ADD_HOST_OPT --name $HOST_REDIS_SLAVE1 -dit ebd-img-redis /bin/bash
+    docker exec $HOST_REDIS_SLAVE1 service sshd start
+    docker exec $HOST_REDIS_SLAVE1 /usr/sbin/redis-server /etc/redis.slave.conf
+    echo "### redis slave 1 started ###"
+else
+    echo "### redis slave 1 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_REDIS_SLAVE2 --hostname $HOST_REDIS_SLAVE2 $ADD_HOST_OPT --name $HOST_REDIS_SLAVE2 -dit ebd-img-redis /bin/bash
-docker exec $HOST_REDIS_SLAVE2 service sshd start
-docker exec $HOST_REDIS_SLAVE2 /usr/sbin/redis-server /etc/redis.slave.conf
-echo "redis slave 2 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_REDIS_SLAVE2)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_REDIS_SLAVE2 --hostname $HOST_REDIS_SLAVE2 $ADD_HOST_OPT --name $HOST_REDIS_SLAVE2 -dit ebd-img-redis /bin/bash
+    docker exec $HOST_REDIS_SLAVE2 service sshd start
+    docker exec $HOST_REDIS_SLAVE2 /usr/sbin/redis-server /etc/redis.slave.conf
+    echo "### redis slave 2 started ###"
+else
+    echo "### redis slave 2 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_SOLR_MASTER --hostname $HOST_SOLR_MASTER $ADD_HOST_OPT --name $HOST_SOLR_MASTER -dit ebd-img-solr /bin/bash
-docker exec $HOST_SOLR_MASTER service sshd start
-#docker exec $HOST_SOLR_MASTER # TODO command
-echo "solr master started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_SOLR_MASTER)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_SOLR_MASTER --hostname $HOST_SOLR_MASTER $ADD_HOST_OPT --name $HOST_SOLR_MASTER -dit ebd-img-solr /bin/bash
+    docker exec $HOST_SOLR_MASTER service sshd start
+    #docker exec $HOST_SOLR_MASTER # TODO command
+    echo "### solr master started ###"
+else
+    echo "### solr master was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_SOLR_SLAVE1 --hostname $HOST_SOLR_SLAVE1 $ADD_HOST_OPT --name $HOST_SOLR_SLAVE1 -dit ebd-img-solr /bin/bash
-docker exec $HOST_SOLR_SLAVE1 service sshd start
-#docker exec $HOST_SOLR_SLAVE1 # TODO command
-echo "solr slave 1 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_SOLR_SLAVE1)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_SOLR_SLAVE1 --hostname $HOST_SOLR_SLAVE1 $ADD_HOST_OPT --name $HOST_SOLR_SLAVE1 -dit ebd-img-solr /bin/bash
+    docker exec $HOST_SOLR_SLAVE1 service sshd start
+    #docker exec $HOST_SOLR_SLAVE1 # TODO command
+    echo "### solr slave 1 started ###"
+else
+    echo "### solr slave 1 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_SOLR_SLAVE2 --hostname $HOST_SOLR_SLAVE2 $ADD_HOST_OPT --name $HOST_SOLR_SLAVE2 -dit ebd-img-solr /bin/bash
-docker exec $HOST_SOLR_SLAVE2 service sshd start
-#docker exec $HOST_SOLR_SLAVE2 # TODO command
-echo "solr slave 2 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_SOLR_SLAVE2)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_SOLR_SLAVE2 --hostname $HOST_SOLR_SLAVE2 $ADD_HOST_OPT --name $HOST_SOLR_SLAVE2 -dit ebd-img-solr /bin/bash
+    docker exec $HOST_SOLR_SLAVE2 service sshd start
+    #docker exec $HOST_SOLR_SLAVE2 # TODO command
+    echo "### solr slave 2 started ###"
+else
+    echo "### solr slave 2 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_TOMCAT1 --hostname $HOST_TOMCAT1 $ADD_HOST_OPT --name $HOST_TOMCAT1 -dit ebd-img-tomcat /bin/bash
-docker exec $HOST_TOMCAT1 service sshd start
-docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-portal/bin/startup.sh
-docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-manager/bin/startup.sh
-docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-rest/bin/startup.sh
-docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-search/bin/startup.sh
-docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-sso/bin/startup.sh
-docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-order/bin/startup.sh
-echo "tomcat 1 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_TOMCAT1)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_TOMCAT1 --hostname $HOST_TOMCAT1 $ADD_HOST_OPT --name $HOST_TOMCAT1 -dit ebd-img-tomcat /bin/bash
+    docker exec $HOST_TOMCAT1 service sshd start
+    docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-portal/bin/startup.sh
+    docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-manager/bin/startup.sh
+    docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-rest/bin/startup.sh
+    docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-search/bin/startup.sh
+    docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-sso/bin/startup.sh
+    docker exec $HOST_TOMCAT1 /opt/tomcats/tomcat-order/bin/startup.sh
+    echo "### tomcat server 1 started ###"
+else
+    echo "### tomcat server 1 was skipped ###"
+fi
 
-docker run --net $NETWORK_NAME --ip $IP_TOMCAT2 --hostname $HOST_TOMCAT2 $ADD_HOST_OPT --name $HOST_TOMCAT2 -dit ebd-img-tomcat /bin/bash
-docker exec $HOST_TOMCAT2 service sshd start
-docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-portal/bin/startup.sh
-docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-manager/bin/startup.sh
-docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-rest/bin/startup.sh
-docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-search/bin/startup.sh
-docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-sso/bin/startup.sh
-docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-order/bin/startup.sh
-echo "tomcat 2 started"
+if [ "$(echo $SKIP_EBD_HOSTS | grep -F $HOST_TOMCAT2)" = "" ] ; then
+    docker run --net $NETWORK_NAME --ip $IP_TOMCAT2 --hostname $HOST_TOMCAT2 $ADD_HOST_OPT --name $HOST_TOMCAT2 -dit ebd-img-tomcat /bin/bash
+    docker exec $HOST_TOMCAT2 service sshd start
+    docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-portal/bin/startup.sh
+    docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-manager/bin/startup.sh
+    docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-rest/bin/startup.sh
+    docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-search/bin/startup.sh
+    docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-sso/bin/startup.sh
+    docker exec $HOST_TOMCAT2 /opt/tomcats/tomcat-order/bin/startup.sh
+    echo "### tomcat server 2 started ###"
+else
+    echo "### tomcat server 2 was skipped ###"
+fi
 
-echo "###########################################################################################"
-echo "####  all servers in cluster have been brought up, please check out the details above  ####"
-echo "###########################################################################################"
+echo "###################################################################################"
+echo "####  container starting process finished, please check out the details above  ####"
+echo "###################################################################################"
 
