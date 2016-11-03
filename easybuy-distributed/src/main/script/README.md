@@ -1,11 +1,11 @@
 # Prerequisites #
-- Docker is needed and latest version is encouraged (while 1.10.1+ should work) since there are some new network/host related arguments used in the scripts. However, I am not sure of the minium version.
+- Docker 1.10.0+ is needed as there are some recently added network/host related features used by the scripts.
 
 # Quick Start #
 These scripts help to create a dozen of containers (as vms) along with your host in a private network utilizing the development of easybuy-distributed.
 ```
 ./create-network.sh
-./create-img-common.sh      # this will take 5 or 10 mins
+./create-img-common.sh      # this will take 5 or 10 mins (to install dependencies from yum repo)
 ./create-imgs-cluster.sh    # build the 6 images, taking no more than 5 mins
 ./run-containers.sh
 ```
@@ -16,7 +16,6 @@ TIPS:
 - `docker ps -a` lists all containers.
 - sshd are also enabled in the containers so that you could ssh to them (`root/password`) in case you access from some other hosts in the private network.
 - There are some `delete-*.sh` and `kill-*.sh` scripts you can make use of if you need to clear up things quickly.
-- It is recommended to pull the official centos 6 image to local (`docker pull centos:6`) because all our images are based on it and that will accelerate repeated common image rebuilding opeartion.
 
 
 # Specs #
@@ -48,12 +47,12 @@ TIPS:
 - tomcat1
 - tomcat2
 
-| Hostname         | Ip Addr          |  Services/Ports    | Remarks                                             |
+| Hostname         | Ip Addr          |  Services (Ports)  | Remarks                                             |
 | -------------    |------------------|--------------------|-----------------------------------------------------|
 | fastdfs-tracker  | 192.168.25.133   | tracker (22122)    |                                                     |
 | fastdfs-storage1 | 192.168.25.134   | storage 1 (22122) + nginx (80)      |                                    |
 | fastdfs-storage2 | 192.168.25.135   | storage 2 (22122) + nginx (80)      |                                    |
-| mysql            | 192.168.25.11    | empty mysql(3306)  | need to init db on container start                  |
+| mysql            | 192.168.25.11    | empty mysql (3306)  | need to init db on container start                 |
 | nginx            | 192.168.25.2     | 1) virtual-hosting all domains like search.easybuy.com, sso.easybuy.com, etc.(forwarding to specific tomcat instance per domain name); 2) Load balancing tomcats ranging on tomcat1 and tomcat2; 3) Listen on port 80   |      |
 | redis-master     | 192.168.25.151   | master (6379)      | need syncing of data to mysql, including on delete  |
 | redis-slave1     | 192.168.25.152   | slave1 (6379)      |                                                     |
