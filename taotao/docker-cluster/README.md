@@ -61,7 +61,7 @@ TIPS:
 | solr-master      | 192.168.25.161   | (N/A)              |  TODO                                               |
 | solr-slave1      | 192.168.25.162   | (N/A)              |  TODO                                               |
 | solr-slave2      | 192.168.25.163   | (N/A)              |  TODO                                               |
-| tomcat1          | 192.168.25.21    | 6 tomcats: portal(8081), manager(8082), rest(8083), search(8084), sso(8085), order(8086)    | tomcat admin/password: tomcat/tomcat     |
+| tomcat1          | 192.168.25.21    | 6 tomcats: portal(8081), rest(8082), manager(8083), search(8084), sso(8085), order(8086)    | tomcat admin/password: tomcat/tomcat     |
 | tomcat2          | 192.168.25.22    | replica of tomcat1 |                                                     |
 | (your laptop)    | 192.168.25.1     |                    |                                                     |
 
