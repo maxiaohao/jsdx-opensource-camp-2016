@@ -1,4 +1,0 @@
-# this Dockerfile must be run from the project root directory (easybuy-distributed) using "-f" in order to access the third-party files
-FROM ebd-img-common
-
-#ENTRYPOINT ["/sbin/service", "mysqld", "start"]

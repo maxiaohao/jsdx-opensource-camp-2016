@@ -42,4 +42,20 @@ public class ItemController {
         return result;
     }
 
+
+    @RequestMapping(value = "/item/update", method = RequestMethod.POST)
+    @ResponseBody
+    public TaotaoResult updateItem(TbItem item, String desc) {
+        TaotaoResult result = itemService.updateItem(item, desc);
+        return result;
+    }
+
+
+    @RequestMapping(value = "/item/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public TaotaoResult deleteItem(Long itemId) {
+        TaotaoResult result = itemService.deleteItem(itemId);
+        return result;
+    }
+
 }

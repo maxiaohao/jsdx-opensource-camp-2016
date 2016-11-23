@@ -1,0 +1,14 @@
+# this Dockerfile must be run from the project root directory (taotao-distributed) using "-f" in order to access the third-party files
+FROM ebd-img-common
+
+ENV INST_STUFF /tmp/install-stuff
+ENV INST_TMP /tmp/install-tmp
+
+COPY ./third-party $INST_STUFF
+COPY ./cluster-conf/fastdfs-install.sh $INST_STUFF
+
+RUN /bin/bash $INST_STUFF/fastdfs-install.sh && rm -rf $INST_STUFF $INST_TMP
+
+COPY ./cluster-conf/fastdfs-nginx.conf /usr/local/nginx/conf/nginx.conf
+
+#ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]

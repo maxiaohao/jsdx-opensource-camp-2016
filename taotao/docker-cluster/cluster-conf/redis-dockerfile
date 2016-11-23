@@ -1,0 +1,11 @@
+# this Dockerfile must be run from the project root directory (taotao-distributed) using "-f" in order to access the third-party files
+FROM ebd-img-common
+
+ENV INST_STUFF /tmp/install-stuff
+RUN mkdir -p $INST_STUFF
+
+COPY ./cluster-conf/redis-install.sh $INST_STUFF
+
+RUN /bin/bash $INST_STUFF/redis-install.sh && rm -rf $INST_STUFF
+
+#ENTRYPOINT ["", "", ""]

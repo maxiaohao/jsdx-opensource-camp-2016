@@ -107,4 +107,24 @@ public class ItemServiceImpl implements ItemService {
         return TaotaoResult.ok();
     }
 
+
+    @Override
+    public TaotaoResult updateItem(TbItem item, String desc) {
+        itemMapper.updateByPrimaryKey(item);
+        TbItemDesc itemDesc = new TbItemDesc();
+        itemDesc.setItemId(item.getId());
+        itemDesc.setItemDesc(desc);
+        itemDesc.setUpdated(new Date());
+        itemDescMapper.updateByPrimaryKeySelective(itemDesc);
+        return TaotaoResult.ok();
+    }
+
+
+    @Override
+    public TaotaoResult deleteItem(Long itemId) {
+        itemDescMapper.deleteByPrimaryKey(itemId);
+        itemMapper.deleteByPrimaryKey(itemId);
+        return TaotaoResult.ok();
+    }
+
 }

@@ -1,0 +1,7 @@
+# this Dockerfile must be run from the project root directory (taotao-distributed) using "-f" in order to access the third-party files
+FROM ebd-img-common
+
+COPY ./cluster-conf/init-db.sql /tmp/init-db.sql
+RUN sed -i '3 i max_allowed_packet=16M' /etc/my.cnf && service mysqld start && mysql -u root -e "source /tmp/init-db.sql" && service mysqld stop && rm -rf /tmp/init-db.sql
+
+#ENTRYPOINT ["/sbin/service", "mysqld", "start"]

@@ -2,6 +2,7 @@ package com.taotao.pagehelper;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,7 +14,7 @@ import com.taotao.pojo.TbItemExample;
 
 public class TestPageHelper {
 
-    //@Test
+    @Test
     public void testPageHelper() throws Exception {
         // 1、获得mapper代理对象
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
